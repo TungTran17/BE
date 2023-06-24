@@ -31,5 +31,5 @@ public class Service {
     private String service_detail;
     private int service_rateStar;
     private int service_vote;
-
+    
 }
