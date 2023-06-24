@@ -21,6 +21,7 @@ public class Service_status {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     
+    
     private int status_id;
     private int service_id;
     private int service_status;

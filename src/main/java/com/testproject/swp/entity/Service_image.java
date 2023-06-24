@@ -1,5 +1,6 @@
 package com.testproject.swp.entity;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
