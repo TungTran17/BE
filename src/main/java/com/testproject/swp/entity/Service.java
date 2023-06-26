@@ -1,5 +1,7 @@
 package com.testproject.swp.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +26,7 @@ public class Service {
     private int service_id;
     private String service_title;
     private String service_bi;
-    private String service_created_date;
+    private Date service_created_date;
     private int category_id;
     private double service_price;
     private double service_discount;

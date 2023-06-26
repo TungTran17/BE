@@ -1,5 +1,8 @@
 package com.testproject.swp.entity;
 
+
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,20 +21,14 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-@Table(name = "user_tb")
-public class User {
+@Table(name = "reservation")
+public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    private int reservation_id;
     private int user_id;
-    private String user_fullname;
-    private int user_gender;
-    private String user_address;
-    private String user_password;
-    private String user_email;
-    private String user_phone;
-    private int role_id;
-    private int user_status;
-    private String user_image;
-
+    private double total_price;
+    private String note;
+    private int reservation_status;
+    private Date created_date;
 }
