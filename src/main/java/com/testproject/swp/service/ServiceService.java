@@ -2,22 +2,18 @@ package com.testproject.swp.service;
 
 import com.testproject.swp.entity.Service;
 import com.testproject.swp.repository.ServiceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.RequiredArgsConstructor;
 
 
 import java.util.List;
 import java.util.Optional;
 
-
+@RequiredArgsConstructor
 public class ServiceService {
 
     private final ServiceRepository serviceRepository;
-
-    @Autowired
-    public ServiceService(ServiceRepository serviceRepository) {
-        this.serviceRepository = serviceRepository;
-    }
-
+    
     public Service createService(Service service) {
         return serviceRepository.save(service);
     }
