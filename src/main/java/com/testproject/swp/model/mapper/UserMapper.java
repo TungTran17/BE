@@ -3,6 +3,7 @@ package com.testproject.swp.model.mapper;
 import com.testproject.swp.entity.User;
 import com.testproject.swp.model.dto.UserDTO;
 import com.testproject.swp.model.dto.UserDTOCreate;
+import com.testproject.swp.model.dto.UserDTOResponse;
 import com.testproject.swp.model.dto.UserDTOUpdate;
 
 public class UserMapper {
@@ -46,6 +47,19 @@ public class UserMapper {
                 .role_id(userDTOUpdate.getRole_id())
                 .user_image(userDTOUpdate.getUser_image())
                 .user_status(userDTOUpdate.getUser_status())
+                .build();
+    }
+
+    public static UserDTOResponse toUserDTOResponse(User user) {
+        return UserDTOResponse.builder()
+                .user_fullname(user.getUser_fullname())
+                .user_gender(user.getUser_gender())
+                .user_address(user.getUser_address())
+                .user_email(user.getUser_email())
+                .user_phone(user.getUser_phone())
+                .role_id(user.getRole_id())
+                .user_image(user.getUser_image())
+                .user_status(user.getUser_status())
                 .build();
     }
 }

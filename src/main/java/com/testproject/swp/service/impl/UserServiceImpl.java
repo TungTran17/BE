@@ -1,7 +1,9 @@
 package com.testproject.swp.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -11,6 +13,8 @@ import com.testproject.swp.exception.custom.CustomBadReqEx;
 import com.testproject.swp.exception.custom.CustomNotFoundEx;
 import com.testproject.swp.model.dto.UserDTO;
 import com.testproject.swp.model.dto.UserDTOCreate;
+import com.testproject.swp.model.dto.UserDTOLoginRequest;
+import com.testproject.swp.model.dto.UserDTOResponse;
 import com.testproject.swp.model.dto.UserDTOUpdate;
 import com.testproject.swp.model.mapper.CustomError;
 import com.testproject.swp.model.mapper.UserMapper;
@@ -70,6 +74,27 @@ public class UserServiceImpl implements UserService {
         }
         userRepository.deleteById(user_id);
         return UserMapper.toUserDTO(userOptional.get());
+    }
+
+    @Override
+    public Map<String, UserDTOResponse> authenticate(Map<String, UserDTOLoginRequest> userLoginRequestMap) {
+        UserDTOLoginRequest userLoginRequest = userLoginRequestMap.get("user");
+        Optional<User> userOptional = userRepository.findByEmail(userLoginRequest.getUser_email());
+        boolean isAuthen = false;
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            if (user.getUser_password().equals(userLoginRequest.getUser_password())) {
+                isAuthen = true;
+            }
+        }
+        if (!isAuthen) {
+            System.out.println("Login fail!");
+            System.out.println("Username and password incorrect");
+        }
+        Map<String, UserDTOResponse> wrapper = new HashMap<>();
+        UserDTOResponse userDTOResponse = UserMapper.toUserDTOResponse(userOptional.get());
+        wrapper.put("user", userDTOResponse);
+        return wrapper;
     }
 
 }
