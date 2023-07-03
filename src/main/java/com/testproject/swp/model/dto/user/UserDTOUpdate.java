@@ -1,11 +1,12 @@
-package com.testproject.swp.model.dto;
+package com.testproject.swp.model.dto.user;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class UserDTOCreate {
+public class UserDTOUpdate {
+    private int user_id;
     private String user_fullname;
     private int user_gender;
     private String user_address;

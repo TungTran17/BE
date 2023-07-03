@@ -1,10 +1,10 @@
 package com.testproject.swp.model.mapper;
 
 import com.testproject.swp.entity.User;
-import com.testproject.swp.model.dto.UserDTO;
-import com.testproject.swp.model.dto.UserDTOCreate;
-import com.testproject.swp.model.dto.UserDTOResponse;
-import com.testproject.swp.model.dto.UserDTOUpdate;
+import com.testproject.swp.model.dto.user.UserDTO;
+import com.testproject.swp.model.dto.user.UserDTOCreate;
+import com.testproject.swp.model.dto.user.UserDTOResponse;
+import com.testproject.swp.model.dto.user.UserDTOUpdate;
 
 public class UserMapper {
     public static UserDTO toUserDTO(User user) {
@@ -54,6 +54,7 @@ public class UserMapper {
         return UserDTOResponse.builder()
                 .user_fullname(user.getUser_fullname())
                 .user_gender(user.getUser_gender())
+                .user_token(user.getToken())
                 .user_address(user.getUser_address())
                 .user_email(user.getUser_email())
                 .user_phone(user.getUser_phone())

@@ -1,14 +1,18 @@
-package com.testproject.swp.model.dto;
+package com.testproject.swp.model.dto.user;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDTOResponse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +21,7 @@ public class UserDTOResponse {
     private String user_fullname;
     private int user_gender;
     private String user_address;
-    //private String user_password;
+    private String token;
     private String user_email;
     private String user_phone;
     private int role_id;

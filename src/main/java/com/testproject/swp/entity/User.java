@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,8 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Getter
-@Setter
+@Data
 @Table(name = "user_tb")
 public class User {
     @Id
@@ -27,6 +27,7 @@ public class User {
     private int user_id;
     private String user_fullname;
     private int user_gender;
+    private String token;
     private String user_address;
     private String user_password;
     @Column(unique = true)
