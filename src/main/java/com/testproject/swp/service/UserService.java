@@ -9,8 +9,7 @@ import com.testproject.swp.model.dto.user.UserDTOResponse;
 
 public interface UserService {
 
-    // public String addUser(UserDTO userDTO);
-
-    public Map<String, UserDTOResponse> authenticate(Map<String, UserDTOLoginRequest> userDTOLoginRequestMap) throws CustomBadReqEx, CustomNotFoundEx;
+    public Map<String, UserDTOResponse> authenticate(Map<String, UserDTOLoginRequest> userDTOLoginRequestMap)
+            throws CustomBadReqEx, CustomNotFoundEx;
 
 }

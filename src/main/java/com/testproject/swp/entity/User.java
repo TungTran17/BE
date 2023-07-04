@@ -10,9 +10,7 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
@@ -23,15 +21,16 @@ import lombok.Setter;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private int user_id;
+
+    @Column(unique = true)
+    private String email;
+   
     private String user_fullname;
     private int user_gender;
     private String token;
     private String user_address;
     private String user_password;
-    @Column(unique = true)
-    private String user_email;
     private String user_phone;
     private int role_id;
     private int user_status;

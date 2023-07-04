@@ -10,7 +10,7 @@ public class UserDTOCreate {
     private int user_gender;
     private String user_address;
     private String user_password;
-    private String user_email;
+    private String email;
     private String user_phone;
     private int role_id;
     private int user_status;
