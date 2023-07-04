@@ -3,12 +3,14 @@ package com.testproject.swp.util;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import org.springframework.stereotype.Component;
 
 import com.testproject.swp.entity.User;
 import com.testproject.swp.model.TokenPayLoad;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -32,30 +34,31 @@ public class JWTTokenUtil {
                 .signWith(SignatureAlgorithm.HS256, secret).compact();
     }
 
-    // public UserDTOLoginRequest getTokenPayLoad(String token) {
+    public TokenPayLoad getTokenPayLoad(String token) {
+        // biểu thức lamda
+        return getClaimsFromToken(token, (Claims claim) -> {
+            Map<String, Object> mapResult = (Map<String, Object>) claim.get("payload");
+            return TokenPayLoad.builder().user_id((int) mapResult.get("user_id")).email((String) mapResult.get("email"))
+                    .build();
+        });
+    }
 
-    //     return getClaimsFromToken(token, (Claims claim) -> {
-    //         Map<String, Object> mapResult = (Map<String, Object>) claim.get("payload");
-    //         return TokenPayload.builder().userID((int) mapResult.get("userID")).email((String) mapResult.get("email"))
-    //                 .build();
-    //     });
-    // }
+    private <T> T getClaimsFromToken(String token, Function<Claims, T> ClaimsResolver) {
+        final Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        return ClaimsResolver.apply(claims);
+    }
 
-    // private <T> T getClaimsFromToken(String token, Function<Claims, T> ClaimsResolver) {
-    //     final Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-    //     return ClaimsResolver.apply(claims);
-    // }
+    public boolean validate(String token, User user) {
+        TokenPayLoad tokenPayLoad = getTokenPayLoad(token);
 
-    // public boolean validate(String token, Account user) {
-    //     UserDTOLoginRequest tokenPayload = getTokenPayLoad(token);
+        return tokenPayLoad.getUser_id() == user.getUser_id() &&
+                tokenPayLoad.getEmail().equals(user.getEmail())
+                && !isTokenExpired(token);
+    }
 
-    //     return tokenPayload.getUserID() == user.getId() && tokenPayload.getEmail().equals(user.getEmail())
-    //             && !isTokenExpired(token);
-    // }
-
-    // private boolean isTokenExpired(String token) {
-    //     Date expiredDate = getClaimsFromToken(token, Claims::getExpiration);
-    //     return expiredDate.before(new Date());
-    // }
+    private boolean isTokenExpired(String token) {
+        Date expiredDate = getClaimsFromToken(token, Claims::getExpiration);
+        return expiredDate.before(new Date());
+    }
 
 }

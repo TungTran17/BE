@@ -15,4 +15,6 @@ public interface UserService {
 
     public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreate> userDTOCreateReqMap);
 
+    public Map<String, UserDTOResponse> getCurrentUser() throws CustomNotFoundEx;
+
 }

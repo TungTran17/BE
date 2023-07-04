@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +47,7 @@ public class UserServiceImpl implements UserService {
             User user = userOptional.get();
             if (passwordEncoder.matches(userDTOLoginRequest.getUser_password(), user.getUser_password())) {
                 isAuthen = true;
-                //System.out.println("Username and password correct");
+                // System.out.println("Username and password correct");
             }
         }
         if (!isAuthen) {
@@ -71,6 +73,18 @@ public class UserServiceImpl implements UserService {
         userDTOResponse.setToken(jwtTokenUtil.generateToken(user, 24 * 60 * 60));
         wrapper.put("user", userDTOResponse);
         return wrapper;
+    }
+
+    @Override
+    public Map<String, UserDTOResponse> getCurrentUser() throws CustomNotFoundEx {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            String email = ((UserDetails) principal).getUsername();
+            User user = userRepository.findByEmail(email).get();
+            return buildDTOResponse(user);
+        }
+       throw new CustomNotFoundEx(CustomError.builder().code("404").message("User not exits").build());
+
     }
 
 }

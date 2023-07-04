@@ -3,6 +3,7 @@ package com.testproject.swp.controller;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,5 +34,10 @@ public class UserController {
     @PostMapping("/register")
     public Map<String, UserDTOResponse> registerUser(@RequestBody Map<String, UserDTOCreate> userDTOCreateReqMap) throws CustomBadReqEx, CustomNotFoundEx {
         return userService.registerUser(userDTOCreateReqMap);
+    }
+
+    @GetMapping("/user")
+    public Map<String, UserDTOResponse> getCurrentUser() throws CustomNotFoundEx{
+        return userService.getCurrentUser();
     }
 }
