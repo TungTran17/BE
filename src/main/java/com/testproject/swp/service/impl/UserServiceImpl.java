@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.testproject.swp.entity.User;
 import com.testproject.swp.exception.custom.CustomBadReqEx;
 import com.testproject.swp.exception.custom.CustomNotFoundEx;
+import com.testproject.swp.model.dto.user.UserDTOCreate;
 import com.testproject.swp.model.dto.user.UserDTOLoginRequest;
 import com.testproject.swp.model.dto.user.UserDTOResponse;
 import com.testproject.swp.model.mapper.CustomError;
@@ -23,10 +24,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    //private final PasswordEncoder passwordEncoder;
+    // private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final JWTTokenUtil jwtTokenUtil;
-    
+
     @Override
     public Map<String, UserDTOResponse> authenticate(Map<String, UserDTOLoginRequest> userLoginRequestMap)
             throws CustomBadReqEx, CustomNotFoundEx {
@@ -49,12 +50,26 @@ public class UserServiceImpl implements UserService {
         if (!isAuthen) {
             throw new CustomBadReqEx(
                     CustomError.builder().code("400").message("Email or password incorrect").build());
-            //System.out.println("Username and password incorrect");
+            // System.out.println("Username and password incorrect");
         }
+        return buildDTOResponse(userOptional.get());
+    }
+
+    @Override
+    public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreate> userDTOCreateReqMap) {
+        UserDTOCreate createUserDTOCreate = userDTOCreateReqMap.get("user");
+        User user = UserMapper.toUser(createUserDTOCreate);
+        user = userRepository.save(user);
+        return buildDTOResponse(user);
+
+    }
+
+    private Map<String, UserDTOResponse> buildDTOResponse(User user) {
         Map<String, UserDTOResponse> wrapper = new HashMap<>();
-        UserDTOResponse userDTOResponse = UserMapper.toUserDTOResponse(userOptional.get());
-        userDTOResponse.setToken(jwtTokenUtil.generateToken(userOptional.get(), 24*60*60));
+        UserDTOResponse userDTOResponse = UserMapper.toUserDTOResponse(user);
+        userDTOResponse.setToken(jwtTokenUtil.generateToken(user, 24 * 60 * 60));
         wrapper.put("user", userDTOResponse);
         return wrapper;
     }
+
 }

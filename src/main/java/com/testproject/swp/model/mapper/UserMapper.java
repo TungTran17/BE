@@ -21,17 +21,18 @@ public class UserMapper {
                 .build();
     }
 
-    public static User toUser(UserDTOCreate userDTO) {
+    public static User toUser(UserDTOCreate userDTOCreate) {
         return User.builder()
-                .user_password(userDTO.getUser_password())
-                .user_fullname(userDTO.getUser_fullname())
-                .user_gender(userDTO.getUser_gender())
-                .user_address(userDTO.getUser_address())
-                .email(userDTO.getEmail())
-                .user_phone(userDTO.getUser_phone())
-                .role_id(userDTO.getRole_id())
-                .user_image(userDTO.getUser_image())
-                .user_status(userDTO.getUser_status())
+                .user_password(userDTOCreate.getUser_password())
+                .user_fullname(userDTOCreate.getUser_fullname())
+                .user_gender(userDTOCreate.getUser_gender())
+                .token(userDTOCreate.getToken())
+                .user_address(userDTOCreate.getUser_address())
+                .email(userDTOCreate.getEmail())
+                .user_phone(userDTOCreate.getUser_phone())
+                .role_id(userDTOCreate.getRole_id())
+                .user_image(userDTOCreate.getUser_image())
+                .user_status(userDTOCreate.getUser_status())
                 .build();
     }
 
@@ -54,7 +55,7 @@ public class UserMapper {
         return UserDTOResponse.builder()
                 .user_fullname(user.getUser_fullname())
                 .user_gender(user.getUser_gender())
-                .user_token(user.getToken())
+                .token(user.getToken())
                 .user_address(user.getUser_address())
                 .email(user.getEmail())
                 .user_phone(user.getUser_phone())

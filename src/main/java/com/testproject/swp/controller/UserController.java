@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.testproject.swp.exception.custom.CustomBadReqEx;
 import com.testproject.swp.exception.custom.CustomNotFoundEx;
+import com.testproject.swp.model.dto.user.UserDTOCreate;
 import com.testproject.swp.model.dto.user.UserDTOLoginRequest;
 import com.testproject.swp.model.dto.user.UserDTOResponse;
 import com.testproject.swp.service.UserService;
@@ -29,4 +30,8 @@ public class UserController {
         return userService.authenticate(userDTOLoginReqMap);
     }
 
+    @PostMapping("/register")
+    public Map<String, UserDTOResponse> registerUser(@RequestBody Map<String, UserDTOCreate> userDTOCreateReqMap) throws CustomBadReqEx, CustomNotFoundEx {
+        return userService.registerUser(userDTOCreateReqMap);
+    }
 }

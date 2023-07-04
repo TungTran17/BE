@@ -26,5 +26,4 @@ public class UserDTOResponse {
     private int role_id;
     private int user_status;
     private String user_image;
-    private String user_token;
 }

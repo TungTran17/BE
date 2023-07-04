@@ -8,6 +8,7 @@ import lombok.Data;
 public class UserDTOCreate {
     private String user_fullname;
     private int user_gender;
+    private String token;
     private String user_address;
     private String user_password;
     private String email;
