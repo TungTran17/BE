@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.testproject.swp.entity.User;
@@ -16,6 +15,7 @@ import com.testproject.swp.model.mapper.CustomError;
 import com.testproject.swp.model.mapper.UserMapper;
 import com.testproject.swp.repository.UserRepository;
 import com.testproject.swp.service.UserService;
+import com.testproject.swp.util.JWTTokenUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,8 +23,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final PasswordEncoder passwordEncoder;
+    //private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final JWTTokenUtil jwtTokenUtil;
     
     @Override
     public Map<String, UserDTOResponse> authenticate(Map<String, UserDTOLoginRequest> userLoginRequestMap)
@@ -52,6 +53,7 @@ public class UserServiceImpl implements UserService {
         }
         Map<String, UserDTOResponse> wrapper = new HashMap<>();
         UserDTOResponse userDTOResponse = UserMapper.toUserDTOResponse(userOptional.get());
+        userDTOResponse.setToken(jwtTokenUtil.generateToken(userOptional.get(), 24*60*60));
         wrapper.put("user", userDTOResponse);
         return wrapper;
     }
