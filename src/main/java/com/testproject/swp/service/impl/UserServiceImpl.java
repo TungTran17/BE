@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.testproject.swp.entity.User;
@@ -24,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    // private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final JWTTokenUtil jwtTokenUtil;
 
@@ -42,15 +43,14 @@ public class UserServiceImpl implements UserService {
         boolean isAuthen = false;
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            if (user.getUser_password().equals(userDTOLoginRequest.getUser_password())) {
+            if (passwordEncoder.matches(userDTOLoginRequest.getUser_password(), user.getUser_password())) {
                 isAuthen = true;
-                System.out.println("Username and password correct");
+                //System.out.println("Username and password correct");
             }
         }
         if (!isAuthen) {
             throw new CustomBadReqEx(
                     CustomError.builder().code("400").message("Email or password incorrect").build());
-            // System.out.println("Username and password incorrect");
         }
         return buildDTOResponse(userOptional.get());
     }
@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService {
     public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreate> userDTOCreateReqMap) {
         UserDTOCreate createUserDTOCreate = userDTOCreateReqMap.get("user");
         User user = UserMapper.toUser(createUserDTOCreate);
+        user.setUser_password(passwordEncoder.encode(user.getUser_password()));
         user = userRepository.save(user);
         return buildDTOResponse(user);
 
