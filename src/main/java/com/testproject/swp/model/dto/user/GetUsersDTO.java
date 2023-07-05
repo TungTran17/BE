@@ -5,14 +5,13 @@ import lombok.Data;
 
 @Data
 @Builder
-public class UserDTOUpdate {
-    
+public class GetUsersDTO {
     private int userID;
     private String name;
     private int gender;
+    //private String password;
     // private String token;
     private String address;
-    private String password;
     private String email;
     private String phone;
     private int roleID;

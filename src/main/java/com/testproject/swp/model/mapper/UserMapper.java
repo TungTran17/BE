@@ -1,6 +1,7 @@
 package com.testproject.swp.model.mapper;
 
 import com.testproject.swp.entity.User;
+import com.testproject.swp.model.dto.user.GetUsersDTO;
 import com.testproject.swp.model.dto.user.UserDTO;
 import com.testproject.swp.model.dto.user.UserDTOCreate;
 import com.testproject.swp.model.dto.user.UserDTOResponse;
@@ -20,7 +21,7 @@ public class UserMapper {
                 .build();
     }
 
-    public static User toUser(UserDTOCreate userDTOCreate) {
+    public static User toUserCreateUser(UserDTOCreate userDTOCreate) {
         return User.builder()
                 .password(userDTOCreate.getPassword())
                 .name(userDTOCreate.getName())
@@ -34,9 +35,10 @@ public class UserMapper {
                 .build();
     }
 
-    public static User toUser(UserDTOUpdate userDTOUpdate) {
+    public static User toUserUpdateUser(UserDTOUpdate userDTOUpdate) {
         return User.builder()
-                // .user_password(userDTOUpdate.getUser_password())
+                .password(userDTOUpdate.getPassword())
+                .userID(userDTOUpdate.getUserID())
                 .name(userDTOUpdate.getName())
                 .gender(userDTOUpdate.getGender())
                 .address(userDTOUpdate.getAddress())
@@ -44,6 +46,20 @@ public class UserMapper {
                 .phone(userDTOUpdate.getPhone())
                 .roleID(userDTOUpdate.getRoleID())
                 .status(userDTOUpdate.getStatus())
+                .build();
+    }
+
+    public static GetUsersDTO toGetUser(User user) {
+        return GetUsersDTO.builder()
+                //.password(user.getPassword())
+                .userID(user.getUserID())
+                .name(user.getName())
+                .gender(user.getGender())
+                .address(user.getAddress())
+                .email(user.getEmail())
+                .phone(user.getPhone())
+                .roleID(user.getRoleID())
+                .status(user.getStatus())
                 .build();
     }
 

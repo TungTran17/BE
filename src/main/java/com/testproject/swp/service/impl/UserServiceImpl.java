@@ -1,8 +1,11 @@
 package com.testproject.swp.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.testproject.swp.entity.User;
 import com.testproject.swp.exception.custom.CustomBadReqEx;
 import com.testproject.swp.exception.custom.CustomNotFoundEx;
+import com.testproject.swp.model.dto.user.GetUsersDTO;
 import com.testproject.swp.model.dto.user.UserDTOCreate;
 import com.testproject.swp.model.dto.user.UserDTOLoginRequest;
 import com.testproject.swp.model.dto.user.UserDTOResponse;
@@ -61,7 +65,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreate> userDTOCreateReqMap) {
         UserDTOCreate createUserDTOCreate = userDTOCreateReqMap.get("user");
-        User user = UserMapper.toUser(createUserDTOCreate);
+        User user = UserMapper.toUserCreateUser(createUserDTOCreate);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user = userRepository.save(user);
         return buildDTOResponse(user);
@@ -88,7 +92,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, UserDTOUpdate> getProfile(String name) throws CustomNotFoundEx {
+    public Map<String, GetUsersDTO> getProfile(String name) throws CustomNotFoundEx {
         Optional<User> userOptional = userRepository.findByName(name);
         if (userOptional.isPresent()) {
             return buildProfileResponse(userOptional.get());
@@ -97,9 +101,9 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private Map<String, UserDTOUpdate> buildProfileResponse(User user) {
-        Map<String, UserDTOUpdate> wrapper = new HashMap<>();
-        UserDTOUpdate userProfileUpdate = UserDTOUpdate.builder()
+    private Map<String, GetUsersDTO> buildProfileResponse(User user) {
+        Map<String, GetUsersDTO> wrapper = new HashMap<>();
+        GetUsersDTO getUsersDTO = GetUsersDTO.builder()
                 .name(user.getName())
                 .gender(user.getGender())
                 .address(user.getAddress())
@@ -108,8 +112,49 @@ public class UserServiceImpl implements UserService {
                 .roleID(user.getRoleID())
                 .status(user.getStatus())
                 .build();
-        wrapper.put("profile", userProfileUpdate);
+        wrapper.put("profile", getUsersDTO);
         return wrapper;
+    }
+
+    @Override
+    public List<GetUsersDTO> getUserList() throws CustomNotFoundEx {
+
+        List<GetUsersDTO> userList = new ArrayList<>();
+        List<User> users = userRepository.findAll();
+
+        for (User user : users) {
+            userList.add(UserMapper.toGetUser(user));
+        }
+        return userList;
+    }
+
+    @Override
+    public GetUsersDTO getUserByID(int id) throws CustomNotFoundEx {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            return UserMapper.toGetUser(userOptional.get());
+        } else {
+            throw new CustomNotFoundEx(CustomError.builder().code("404").message("User not found").build());
+        }
+
+    }
+
+    @Override
+    public GetUsersDTO updateUser(UserDTOUpdate userDTOUpdate) throws CustomNotFoundEx {
+        User user = UserMapper.toUserUpdateUser(userDTOUpdate);
+        user = userRepository.save(user);
+        return UserMapper.toGetUser(user);
+    }
+
+    @Override
+    public GetUsersDTO deleteUser(int id) throws CustomNotFoundEx {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            userRepository.deleteById(id);
+            return UserMapper.toGetUser(userOptional.get());
+        } else {
+            throw new CustomNotFoundEx(CustomError.builder().code("404").message("User not found").build());
+        }
     }
 
 }
