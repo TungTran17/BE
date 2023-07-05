@@ -15,6 +15,7 @@ import com.testproject.swp.exception.custom.CustomNotFoundEx;
 import com.testproject.swp.model.dto.user.UserDTOCreate;
 import com.testproject.swp.model.dto.user.UserDTOLoginRequest;
 import com.testproject.swp.model.dto.user.UserDTOResponse;
+import com.testproject.swp.model.dto.user.UserDTOUpdate;
 import com.testproject.swp.model.mapper.CustomError;
 import com.testproject.swp.model.mapper.UserMapper;
 import com.testproject.swp.repository.UserRepository;
@@ -45,7 +46,7 @@ public class UserServiceImpl implements UserService {
         boolean isAuthen = false;
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            if (passwordEncoder.matches(userDTOLoginRequest.getUser_password(), user.getUser_password())) {
+            if (passwordEncoder.matches(userDTOLoginRequest.getPassword(), user.getPassword())) {
                 isAuthen = true;
                 // System.out.println("Username and password correct");
             }
@@ -61,7 +62,7 @@ public class UserServiceImpl implements UserService {
     public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreate> userDTOCreateReqMap) {
         UserDTOCreate createUserDTOCreate = userDTOCreateReqMap.get("user");
         User user = UserMapper.toUser(createUserDTOCreate);
-        user.setUser_password(passwordEncoder.encode(user.getUser_password()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user = userRepository.save(user);
         return buildDTOResponse(user);
     }
@@ -82,8 +83,33 @@ public class UserServiceImpl implements UserService {
             User user = userRepository.findByEmail(email).get();
             return buildDTOResponse(user);
         }
-       throw new CustomNotFoundEx(CustomError.builder().code("404").message("User not exits").build());
+        throw new CustomNotFoundEx(CustomError.builder().code("404").message("User not exits").build());
 
+    }
+
+    @Override
+    public Map<String, UserDTOUpdate> getProfile(String name) throws CustomNotFoundEx {
+        Optional<User> userOptional = userRepository.findByName(name);
+        if (userOptional.isPresent()) {
+            return buildProfileResponse(userOptional.get());
+        } else {
+            throw new CustomNotFoundEx(CustomError.builder().code("403").message("User not found").build());
+        }
+    }
+
+    private Map<String, UserDTOUpdate> buildProfileResponse(User user) {
+        Map<String, UserDTOUpdate> wrapper = new HashMap<>();
+        UserDTOUpdate userProfileUpdate = UserDTOUpdate.builder()
+                .name(user.getName())
+                .gender(user.getGender())
+                .address(user.getAddress())
+                .email(user.getEmail())
+                .phone(user.getPhone())
+                .roleID(user.getRoleID())
+                .status(user.getStatus())
+                .build();
+        wrapper.put("profile", userProfileUpdate);
+        return wrapper;
     }
 
 }

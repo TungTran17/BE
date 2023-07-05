@@ -7,6 +7,7 @@ import com.testproject.swp.exception.custom.CustomNotFoundEx;
 import com.testproject.swp.model.dto.user.UserDTOCreate;
 import com.testproject.swp.model.dto.user.UserDTOLoginRequest;
 import com.testproject.swp.model.dto.user.UserDTOResponse;
+import com.testproject.swp.model.dto.user.UserDTOUpdate;
 
 public interface UserService {
 
@@ -16,5 +17,7 @@ public interface UserService {
     public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreate> userDTOCreateReqMap);
 
     public Map<String, UserDTOResponse> getCurrentUser() throws CustomNotFoundEx;
+
+    public Map<String, UserDTOUpdate> getProfile(String name) throws CustomNotFoundEx;
 
 }

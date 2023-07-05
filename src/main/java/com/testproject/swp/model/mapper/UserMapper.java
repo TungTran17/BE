@@ -9,59 +9,54 @@ import com.testproject.swp.model.dto.user.UserDTOUpdate;
 public class UserMapper {
     public static UserDTO toUserDTO(User user) {
         return UserDTO.builder()
-                .user_id(user.getUser_id())
-                .user_fullname(user.getUser_fullname())
-                .user_gender(user.getUser_gender())
-                .user_address(user.getUser_address())
+                .userID(user.getUserID())
+                .name(user.getName())
+                .gender(user.getGender())
+                .address(user.getAddress())
                 .email(user.getEmail())
-                .user_phone(user.getUser_phone())
-                .role_id(user.getRole_id())
-                .user_image(user.getUser_image())
-                .user_status(user.getUser_status())
+                .phone(user.getPhone())
+                .roleID(user.getRoleID())
+                .status(user.getStatus())
                 .build();
     }
 
     public static User toUser(UserDTOCreate userDTOCreate) {
         return User.builder()
-                .user_password(userDTOCreate.getUser_password())
-                .user_fullname(userDTOCreate.getUser_fullname())
-                .user_gender(userDTOCreate.getUser_gender())
+                .password(userDTOCreate.getPassword())
+                .name(userDTOCreate.getName())
+                .gender(userDTOCreate.getGender())
                 .token(userDTOCreate.getToken())
-                .user_address(userDTOCreate.getUser_address())
+                .address(userDTOCreate.getAddress())
                 .email(userDTOCreate.getEmail())
-                .user_phone(userDTOCreate.getUser_phone())
-                .role_id(userDTOCreate.getRole_id())
-                .user_image(userDTOCreate.getUser_image())
-                .user_status(userDTOCreate.getUser_status())
+                .phone(userDTOCreate.getPhone())
+                .roleID(userDTOCreate.getRoleID())
+                .status(userDTOCreate.getStatus())
                 .build();
     }
 
     public static User toUser(UserDTOUpdate userDTOUpdate) {
         return User.builder()
-                .user_id(userDTOUpdate.getUser_id())
-                .user_password(userDTOUpdate.getUser_password())
-                .user_fullname(userDTOUpdate.getUser_fullname())
-                .user_gender(userDTOUpdate.getUser_gender())
-                .user_address(userDTOUpdate.getUser_address())
+                // .user_password(userDTOUpdate.getUser_password())
+                .name(userDTOUpdate.getName())
+                .gender(userDTOUpdate.getGender())
+                .address(userDTOUpdate.getAddress())
                 .email(userDTOUpdate.getEmail())
-                .user_phone(userDTOUpdate.getUser_phone())
-                .role_id(userDTOUpdate.getRole_id())
-                .user_image(userDTOUpdate.getUser_image())
-                .user_status(userDTOUpdate.getUser_status())
+                .phone(userDTOUpdate.getPhone())
+                .roleID(userDTOUpdate.getRoleID())
+                .status(userDTOUpdate.getStatus())
                 .build();
     }
 
     public static UserDTOResponse toUserDTOResponse(User user) {
         return UserDTOResponse.builder()
-                .user_fullname(user.getUser_fullname())
-                .user_gender(user.getUser_gender())
+                .name(user.getName())
+                .gender(user.getGender())
                 .token(user.getToken())
-                .user_address(user.getUser_address())
+                .address(user.getAddress())
                 .email(user.getEmail())
-                .user_phone(user.getUser_phone())
-                .role_id(user.getRole_id())
-                .user_image(user.getUser_image())
-                .user_status(user.getUser_status())
+                .phone(user.getPhone())
+                .roleID(user.getRoleID())
+                .status(user.getStatus())
                 .build();
     }
 }

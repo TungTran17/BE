@@ -59,7 +59,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             System.out.println("JWT Token does not Start with Token");
         }
         if (tokenPayLoad != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            Optional<User> userOptional = userRepository.findById(tokenPayLoad.getUser_id());
+            Optional<User> userOptional = userRepository.findById(tokenPayLoad.getUserID());
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
 
@@ -67,7 +67,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 if (jwtTokenUtil.validate(token, user)) {
                     List<SimpleGrantedAuthority> authorities = new ArrayList<>();
                     UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getEmail(),
-                            user.getUser_password(), new ArrayList<>());
+                            user.getPassword(), new ArrayList<>());
                     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                             userDetails, null, authorities);
                     SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);

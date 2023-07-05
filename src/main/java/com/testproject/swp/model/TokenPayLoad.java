@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @Builder
 public class TokenPayLoad {
-    private int user_id;
+    private int userID;
     private String email;
 }

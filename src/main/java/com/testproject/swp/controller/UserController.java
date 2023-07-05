@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import com.testproject.swp.exception.custom.CustomNotFoundEx;
 import com.testproject.swp.model.dto.user.UserDTOCreate;
 import com.testproject.swp.model.dto.user.UserDTOLoginRequest;
 import com.testproject.swp.model.dto.user.UserDTOResponse;
+import com.testproject.swp.model.dto.user.UserDTOUpdate;
 import com.testproject.swp.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -39,5 +41,10 @@ public class UserController {
     @GetMapping("/user")
     public Map<String, UserDTOResponse> getCurrentUser() throws CustomNotFoundEx{
         return userService.getCurrentUser();
+    }
+
+    @GetMapping("/profile/{name}")
+    public Map<String, UserDTOUpdate> getProfile(@PathVariable String name) throws CustomNotFoundEx{
+        return userService.getProfile(name);
     }
 }

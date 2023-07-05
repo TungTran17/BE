@@ -23,7 +23,7 @@ public class JWTTokenUtil {
         Map<String, Object> claims = new HashMap<>();
 
         TokenPayLoad tokenPayLoad = TokenPayLoad.builder()
-                .user_id(user.getUser_id())
+                .userID(user.getUserID())
                 .email(user.getEmail())
                 .build();
 
@@ -38,7 +38,7 @@ public class JWTTokenUtil {
         // biểu thức lamda
         return getClaimsFromToken(token, (Claims claim) -> {
             Map<String, Object> mapResult = (Map<String, Object>) claim.get("payload");
-            return TokenPayLoad.builder().user_id((int) mapResult.get("user_id")).email((String) mapResult.get("email"))
+            return TokenPayLoad.builder().userID((int) mapResult.get("userID")).email((String) mapResult.get("email"))
                     .build();
         });
     }
@@ -51,7 +51,7 @@ public class JWTTokenUtil {
     public boolean validate(String token, User user) {
         TokenPayLoad tokenPayLoad = getTokenPayLoad(token);
 
-        return tokenPayLoad.getUser_id() == user.getUser_id() &&
+        return tokenPayLoad.getUserID() == user.getUserID() &&
                 tokenPayLoad.getEmail().equals(user.getEmail())
                 && !isTokenExpired(token);
     }

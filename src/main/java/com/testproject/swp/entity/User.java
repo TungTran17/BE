@@ -17,23 +17,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Data
-@Table(name = "user_tb")
+@Table(name = "userTB")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int user_id;
-
+    private int userID;
     @Column(unique = true)
     private String email;
-   
-    private String user_fullname;
-    private int user_gender;
+    @Column(unique = true)
+    private String name;
+    private int gender;
     private String token;
-    private String user_address;
-    private String user_password;
-    private String user_phone;
-    private int role_id;
-    private int user_status;
-    private String user_image;
-
+    private String address;
+    private String password;
+    private String phone;
+    private int roleID;
+    private int status;
 }

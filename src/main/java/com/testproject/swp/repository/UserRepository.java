@@ -12,4 +12,7 @@ import com.testproject.swp.entity.User;
 public interface UserRepository extends JpaRepository<User, Integer> {
     //public Optional<User> findOneByEmailAndPassword(String email, String user_password);
     public Optional<User> findByEmail(String email);
+
+    public Optional<User> findByName(String name);
+    
 }

@@ -6,14 +6,13 @@ import lombok.Data;
 @Data
 @Builder
 public class UserDTOCreate {
-    private String user_fullname;
-    private int user_gender;
+    private String name;
+    private int gender;
     private String token;
-    private String user_address;
-    private String user_password;
+    private String address;
+    private String password;
     private String email;
-    private String user_phone;
-    private int role_id;
-    private int user_status;
-    private String user_image;
+    private String phone;
+    private int roleID;
+    private int status;
 }
