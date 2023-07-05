@@ -2,6 +2,7 @@ package com.testproject.swp.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -26,7 +27,14 @@ public class WebSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable().authorizeRequests().anyRequest().permitAll().and().sessionManagement()
+        httpSecurity.csrf().disable().authorizeRequests()
+                //thằng có url này không cần đăng nhập
+                .antMatchers("/api/ccg1/login").permitAll()
+                 //chỉ cho method post truy cập
+                .antMatchers(HttpMethod.POST, "/api/ccg1/register").permitAll()
+                //bắt buộc đăng nhập
+                .antMatchers("/api/ccg1/**").authenticated()
+                .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

@@ -64,7 +64,6 @@ public class UserServiceImpl implements UserService {
         user.setUser_password(passwordEncoder.encode(user.getUser_password()));
         user = userRepository.save(user);
         return buildDTOResponse(user);
-
     }
 
     private Map<String, UserDTOResponse> buildDTOResponse(User user) {
