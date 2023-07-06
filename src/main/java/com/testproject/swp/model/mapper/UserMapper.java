@@ -49,6 +49,20 @@ public class UserMapper {
                 .build();
     }
 
+    public static User toUserUpdateUser(User user, UserDTOUpdate userDTOUpdate) {
+        return User.builder()
+                .password(userDTOUpdate.getPassword())
+                .userID(userDTOUpdate.getUserID())
+                .name(userDTOUpdate.getName())
+                .gender(userDTOUpdate.getGender())
+                .address(userDTOUpdate.getAddress())
+                .email(userDTOUpdate.getEmail())
+                .phone(userDTOUpdate.getPhone())
+                .roleID(userDTOUpdate.getRoleID())
+                .status(userDTOUpdate.getStatus())
+                .build();
+    }
+
     public static GetUsersDTO toGetUser(User user) {
         return GetUsersDTO.builder()
                 //.password(user.getPassword())

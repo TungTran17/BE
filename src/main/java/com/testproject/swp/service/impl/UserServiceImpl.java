@@ -101,6 +101,34 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public Map<String, UserDTOResponse> updateCurrentUser(Map<String, UserDTOUpdate> userDTOUpdateMap)
+            throws CustomNotFoundEx {
+                 System.out.println("dsd");             
+        User user = getUserLoggedIn();
+        UserDTOUpdate userDTOUpdate = userDTOUpdateMap.get("user");
+        if (user != null) {
+            UserMapper.toUserUpdateUser(user, userDTOUpdate);
+            user = userRepository.save(user);
+            return buildDTOResponse(user);
+        }
+        throw new CustomNotFoundEx(CustomError.builder().code("404").message("User not found").build());
+    }
+
+
+    public User getUserLoggedIn() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            String email = ((UserDetails) principal).getUsername();
+            User user = userRepository.findByEmail(email).get();
+            System.out.println(user);
+            return user;
+        }
+        System.out.println("đwdwd");
+        return null;
+    }
+
+
     private Map<String, GetUsersDTO> buildProfileResponse(User user) {
         Map<String, GetUsersDTO> wrapper = new HashMap<>();
         GetUsersDTO getUsersDTO = GetUsersDTO.builder()

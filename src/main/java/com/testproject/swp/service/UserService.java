@@ -30,4 +30,6 @@ public interface UserService {
 
     public GetUsersDTO deleteUser(int id) throws CustomNotFoundEx;
 
+    public Map<String, UserDTOResponse> updateCurrentUser(Map<String, UserDTOUpdate> userDTOUpdateMap) throws CustomNotFoundEx;
+
 }

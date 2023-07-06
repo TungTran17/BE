@@ -31,6 +31,7 @@ public class WebSecurityConfiguration {
                 //thằng có url này không cần đăng nhập
                 .antMatchers("/api/ccg1/login").permitAll()
                 .antMatchers("/api/ccg1/users/**").permitAll()
+                .antMatchers("/api/ccg1/user").permitAll()
                 .antMatchers("/api/ccg1/deleteUser/**").permitAll()
                  //chỉ cho method post truy cập
                 .antMatchers(HttpMethod.POST, "/api/ccg1/register").permitAll()
