@@ -32,6 +32,9 @@ public class WebSecurityConfiguration {
                 .antMatchers("/api/ccg1/login").permitAll()
                 .antMatchers("/api/ccg1/users/**").permitAll()
                 .antMatchers("/api/ccg1/user").permitAll()
+                .antMatchers("/api/ccg1/reservations").permitAll()
+                .antMatchers("/api/ccg1/addReservation").permitAll()
+                .antMatchers("/api/ccg1/reservation/**").permitAll()
                 .antMatchers("/api/ccg1/roles").permitAll()
                 .antMatchers("/api/ccg1/deleteUser/**").permitAll()
                 // chỉ cho method post truy cập
