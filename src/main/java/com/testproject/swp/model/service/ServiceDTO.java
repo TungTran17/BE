@@ -10,18 +10,13 @@ import lombok.Data;
 public class ServiceDTO {
 
     public ServiceDTO() {
-        // Default constructor without arguments
+        
     }
 
-    public int contPage; // số lượng page của trang
-    public List<GetMyService> listServices; // danh sách service
+    public int contPage; 
+    public List<GetMyService> listServices; 
 
-    /*
-     * thông báo trạng thái thành công hay ko
-     * 202 là ok
-     * 200 
-     * 404 là thất bại
-     */
+   
     public int status;
 
 }

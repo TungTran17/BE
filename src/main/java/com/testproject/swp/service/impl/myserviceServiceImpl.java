@@ -70,7 +70,7 @@ public class myserviceServiceImpl implements MyserviceService {
         Pageable pageable = PageRequest.of(index - 1, pageSize);
 
         Page<MyService> page = myServiceRepository.findAllByStatusAndTitle(status,title,bi,pageable);
-        // nó sẽ lấy hết tất cả Service theo thứ mình tìm
+        
 
         List<GetMyService> myServiceList = new ArrayList<>();
         for (MyService myService : page) {
