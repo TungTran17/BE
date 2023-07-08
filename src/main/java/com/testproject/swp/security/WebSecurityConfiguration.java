@@ -28,14 +28,15 @@ public class WebSecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable().authorizeRequests()
-                //thằng có url này không cần đăng nhập
+                // thằng có url này không cần đăng nhập
                 .antMatchers("/api/ccg1/login").permitAll()
                 .antMatchers("/api/ccg1/users/**").permitAll()
                 .antMatchers("/api/ccg1/user").permitAll()
+                .antMatchers("/api/ccg1/roles").permitAll()
                 .antMatchers("/api/ccg1/deleteUser/**").permitAll()
-                 //chỉ cho method post truy cập
+                // chỉ cho method post truy cập
                 .antMatchers(HttpMethod.POST, "/api/ccg1/register").permitAll()
-                //bắt buộc đăng nhập
+                // bắt buộc đăng nhập
                 .antMatchers("/api/ccg1/**").authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
