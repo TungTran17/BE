@@ -8,7 +8,7 @@ import java.util.function.Function;
 import org.springframework.stereotype.Component;
 
 import com.testproject.swp.entity.User;
-import com.testproject.swp.model.TokenPayLoad;
+import com.testproject.swp.model.token.TokenPayLoad;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

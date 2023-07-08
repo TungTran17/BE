@@ -5,11 +5,11 @@ import java.util.Map;
 
 import com.testproject.swp.exception.custom.CustomBadReqEx;
 import com.testproject.swp.exception.custom.CustomNotFoundEx;
-import com.testproject.swp.model.dto.user.GetUsersDTO;
-import com.testproject.swp.model.dto.user.UserDTOCreate;
-import com.testproject.swp.model.dto.user.UserDTOLoginRequest;
-import com.testproject.swp.model.dto.user.UserDTOResponse;
-import com.testproject.swp.model.dto.user.UserDTOUpdate;
+import com.testproject.swp.model.user.dto.GetUsersDTO;
+import com.testproject.swp.model.user.dto.UserDTOCreate;
+import com.testproject.swp.model.user.dto.UserDTOLoginRequest;
+import com.testproject.swp.model.user.dto.UserDTOResponse;
+import com.testproject.swp.model.user.dto.UserDTOUpdate;
 
 public interface UserService {
 
@@ -30,6 +30,7 @@ public interface UserService {
 
     public GetUsersDTO deleteUser(int id) throws CustomNotFoundEx;
 
-    public Map<String, UserDTOResponse> updateCurrentUser(Map<String, UserDTOUpdate> userDTOUpdateMap) throws CustomNotFoundEx;
+    public Map<String, UserDTOResponse> updateCurrentUser(Map<String, UserDTOUpdate> userDTOUpdateMap)
+            throws CustomNotFoundEx;
 
 }

@@ -1,6 +1,6 @@
 package com.testproject.swp.exception.custom;
 
-import com.testproject.swp.model.mapper.CustomError;
+import com.testproject.swp.model.customer.CustomError;
 
 public class CustomNotFoundEx extends BaseEx {
 

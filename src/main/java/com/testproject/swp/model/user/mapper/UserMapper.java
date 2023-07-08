@@ -1,11 +1,12 @@
-package com.testproject.swp.model.mapper;
+package com.testproject.swp.model.user.mapper;
 
 import com.testproject.swp.entity.User;
-import com.testproject.swp.model.dto.user.GetUsersDTO;
-import com.testproject.swp.model.dto.user.UserDTO;
-import com.testproject.swp.model.dto.user.UserDTOCreate;
-import com.testproject.swp.model.dto.user.UserDTOResponse;
-import com.testproject.swp.model.dto.user.UserDTOUpdate;
+import com.testproject.swp.model.user.dto.GetUsersDTO;
+import com.testproject.swp.model.user.dto.UserDTO;
+import com.testproject.swp.model.user.dto.UserDTOCreate;
+import com.testproject.swp.model.user.dto.UserDTOResponse;
+import com.testproject.swp.model.user.dto.UserDTOUpdate;
+
 
 public class UserMapper {
     public static UserDTO toUserDTO(User user) {

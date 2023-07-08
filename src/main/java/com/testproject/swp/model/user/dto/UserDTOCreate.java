@@ -1,4 +1,4 @@
-package com.testproject.swp.model.dto.user;
+package com.testproject.swp.model.user.dto;
 
 import lombok.Builder;
 import lombok.Data;

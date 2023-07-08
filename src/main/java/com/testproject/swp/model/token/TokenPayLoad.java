@@ -1,4 +1,4 @@
-package com.testproject.swp.model;
+package com.testproject.swp.model.token;
 
 import lombok.Builder;
 import lombok.Data;

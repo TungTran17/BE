@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.testproject.swp.exception.custom.CustomBadReqEx;
 import com.testproject.swp.exception.custom.CustomNotFoundEx;
-import com.testproject.swp.model.mapper.CustomError;
+import com.testproject.swp.model.customer.CustomError;
 
 @RestControllerAdvice
 public class ExHandler {

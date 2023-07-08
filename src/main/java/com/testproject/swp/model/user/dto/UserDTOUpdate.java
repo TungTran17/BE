@@ -1,15 +1,16 @@
-package com.testproject.swp.model.dto.user;
+package com.testproject.swp.model.user.dto;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class UserDTO {
+public class UserDTOUpdate {
+    
     private int userID;
     private String name;
     private int gender;
-    private String token;
+    //private String token;
     private String address;
     private String password;
     private String email;

@@ -1,4 +1,4 @@
-package com.testproject.swp.model.dto.role;
+package com.testproject.swp.model.role.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

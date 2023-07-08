@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.testproject.swp.model.dto.role.RolesDTO;
+import com.testproject.swp.exception.custom.CustomNotFoundEx;
+import com.testproject.swp.model.role.dto.RolesDTO;
 import com.testproject.swp.service.RoleService;
 
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class RoleController {
     private final RoleService roleService;
 
     @GetMapping("/roles")
-    public List<RolesDTO> getRoles() {
+    public List<RolesDTO> getRoles() throws CustomNotFoundEx{
         return roleService.getRoles();
     }
 }

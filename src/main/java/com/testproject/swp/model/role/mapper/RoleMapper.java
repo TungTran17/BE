@@ -1,7 +1,8 @@
-package com.testproject.swp.model.mapper;
+package com.testproject.swp.model.role.mapper;
 
 import com.testproject.swp.entity.Role;
-import com.testproject.swp.model.dto.role.RolesDTO;
+import com.testproject.swp.model.role.dto.RolesDTO;
+
 
 public class RoleMapper {
 

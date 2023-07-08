@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.testproject.swp.entity.User;
-import com.testproject.swp.model.TokenPayLoad;
+import com.testproject.swp.model.token.TokenPayLoad;
 import com.testproject.swp.repository.UserRepository;
 import com.testproject.swp.util.JWTTokenUtil;
 

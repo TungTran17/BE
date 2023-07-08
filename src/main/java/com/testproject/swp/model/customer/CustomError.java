@@ -1,4 +1,4 @@
-package com.testproject.swp.model.mapper;
+package com.testproject.swp.model.customer;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,18 +1,16 @@
-package com.testproject.swp.model.dto.user;
+package com.testproject.swp.model.user.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class UserDTOResponse {
+public class GetUsersDTO {
+    private int userID;
     private String name;
     private int gender;
-    private String token;
+    //private String password;
+    // private String token;
     private String address;
     private String email;
     private String phone;

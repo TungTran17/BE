@@ -3,7 +3,7 @@ package com.testproject.swp.exception.custom;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.testproject.swp.model.mapper.CustomError;
+import com.testproject.swp.model.customer.CustomError;
 
 import lombok.Getter;
 import lombok.Setter;
