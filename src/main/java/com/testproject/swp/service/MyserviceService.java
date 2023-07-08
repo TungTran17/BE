@@ -2,7 +2,7 @@ package com.testproject.swp.service;
 
 import com.testproject.swp.entity.MyService;
 import com.testproject.swp.exception.custom.CustomNotFoundEx;
-import com.testproject.swp.model.service.GetMyService;
+import com.testproject.swp.model.service.dto.GetMyService;
 
 import java.util.List;
 

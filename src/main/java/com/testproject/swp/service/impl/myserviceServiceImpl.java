@@ -1,10 +1,9 @@
 package com.testproject.swp.service.impl;
 
 import com.testproject.swp.entity.MyService;
-import com.testproject.swp.entity.MyServiceImage;
 import com.testproject.swp.exception.custom.CustomNotFoundEx;
-import com.testproject.swp.model.service.GetMyService;
-import com.testproject.swp.model.service.MyServiceMapper;
+import com.testproject.swp.model.service.dto.GetMyService;
+import com.testproject.swp.model.service.mapper.MyServiceMapper;
 import com.testproject.swp.repository.MyServiceRepository; 
 import com.testproject.swp.service.MyserviceService;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +13,6 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,7 @@
-package com.testproject.swp.model.service;
+package com.testproject.swp.model.service.mapper;
 
 import com.testproject.swp.entity.MyService;
+import com.testproject.swp.model.service.dto.GetMyService;
 
 public class MyServiceMapper {
     public static GetMyService toGetMedecine(MyService service) {
