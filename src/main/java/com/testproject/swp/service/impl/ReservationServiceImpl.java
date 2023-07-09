@@ -6,15 +6,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.testproject.swp.entity.Reservation;
+import com.testproject.swp.entity.User;
 import com.testproject.swp.exception.custom.CustomNotFoundEx;
 import com.testproject.swp.model.Reservation.dto.ReservationCreateDTO;
 import com.testproject.swp.model.Reservation.dto.ReservationResponseDTO;
+import com.testproject.swp.model.Reservation.dto.ReservationUpdateDTO;
 import com.testproject.swp.model.Reservation.dto.ReservationsDTO;
 import com.testproject.swp.model.Reservation.mapper.ReservationMapper;
 import com.testproject.swp.model.customer.CustomError;
+import com.testproject.swp.model.user.mapper.UserMapper;
 import com.testproject.swp.repository.ReservationRepository;
 import com.testproject.swp.service.ReservationService;
 
@@ -65,6 +70,28 @@ public class ReservationServiceImpl implements ReservationService {
         ReservationResponseDTO reservationResponseDTO = ReservationMapper.toReservationDTOResponse(reservation);
         wrapper.put("reservation", reservationResponseDTO);
         return wrapper;
+    }
+
+    @Override
+    public ReservationsDTO updateReservation(ReservationUpdateDTO reservationUpdateDTO) throws CustomNotFoundEx {
+
+        Reservation reservation = ReservationMapper.toReservationUpdateReservation(reservationUpdateDTO);
+        reservation = reservationRepository.save(reservation);
+        return ReservationMapper.toGetReservation(reservation);
+
+    }
+
+    @Override
+    public ReservationsDTO deleteReservation(@PathVariable int id) throws CustomNotFoundEx {
+
+        Optional<Reservation> reservationOptional = reservationRepository.findById(id);
+
+        if (reservationOptional.isPresent()) {
+            reservationRepository.deleteById(id);
+            return ReservationMapper.toGetReservation(reservationOptional.get());
+        } else {
+            throw new CustomNotFoundEx(CustomError.builder().code("404").message("User not found").build());
+        }
     }
 
 }

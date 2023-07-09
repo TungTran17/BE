@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.testproject.swp.exception.custom.CustomNotFoundEx;
 import com.testproject.swp.model.Reservation.dto.ReservationCreateDTO;
 import com.testproject.swp.model.Reservation.dto.ReservationResponseDTO;
+import com.testproject.swp.model.Reservation.dto.ReservationUpdateDTO;
 import com.testproject.swp.model.Reservation.dto.ReservationsDTO;
 import com.testproject.swp.service.ReservationService;
 
@@ -38,7 +41,21 @@ public class ReservationController {
     }
 
     @PostMapping("/addReservation")
-    public Map<String, ReservationResponseDTO> addReservation(@RequestBody Map<String, ReservationCreateDTO>  reservationCreateDTOMap) {
+    public Map<String, ReservationResponseDTO> addReservation(
+            @RequestBody Map<String, ReservationCreateDTO> reservationCreateDTOMap) {
         return reservationService.addReservation(reservationCreateDTOMap);
+    }
+
+    @PutMapping("/updateReservation/{id}")
+    public ReservationsDTO updateReservation(@PathVariable int id,
+            @RequestBody ReservationUpdateDTO reservationUpdateDTO) throws CustomNotFoundEx {
+        reservationUpdateDTO.setReservationID(id);
+        return reservationService.updateReservation(reservationUpdateDTO);
+
+    }
+
+    @DeleteMapping("/deleteReservation/{id}")
+    public ReservationsDTO deleteReservation(@PathVariable int id) throws CustomNotFoundEx {
+        return reservationService.deleteReservation(id);
     }
 }

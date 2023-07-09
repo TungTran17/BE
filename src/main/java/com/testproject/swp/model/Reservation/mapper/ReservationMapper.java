@@ -3,6 +3,7 @@ package com.testproject.swp.model.Reservation.mapper;
 import com.testproject.swp.entity.Reservation;
 import com.testproject.swp.model.Reservation.dto.ReservationCreateDTO;
 import com.testproject.swp.model.Reservation.dto.ReservationResponseDTO;
+import com.testproject.swp.model.Reservation.dto.ReservationUpdateDTO;
 import com.testproject.swp.model.Reservation.dto.ReservationsDTO;
 
 public class ReservationMapper {
@@ -31,6 +32,16 @@ public class ReservationMapper {
                 .note(createReservationDTO.getNote())
                 .reservationStatus(createReservationDTO.getReservationStatus())
                 .createdDate(createReservationDTO.getCreatedDate())
+                .build();
+    }
+
+    public static Reservation toReservationUpdateReservation(ReservationUpdateDTO reservationUpdateDTO) {
+        return Reservation.builder()
+                .reservationID(reservationUpdateDTO.getReservationID())
+                .totalPrice(reservationUpdateDTO.getTotalPrice())
+                .note(reservationUpdateDTO.getNote())
+                .reservationStatus(reservationUpdateDTO.getReservationStatus())
+                .createdDate(reservationUpdateDTO.getCreatedDate())
                 .build();
     }
 

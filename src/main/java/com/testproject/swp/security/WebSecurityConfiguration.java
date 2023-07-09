@@ -34,6 +34,8 @@ public class WebSecurityConfiguration {
                 .antMatchers("/api/ccg1/user").permitAll()
                 .antMatchers("/api/ccg1/reservations").permitAll()
                 .antMatchers("/api/ccg1/addReservation").permitAll()
+                .antMatchers("/api/ccg1/updateReservation/**").permitAll()
+                .antMatchers("/api/ccg1/deleteReservation/**").permitAll()
                 .antMatchers("/api/ccg1/reservation/**").permitAll()
                 .antMatchers("/api/ccg1/roles").permitAll()
                 .antMatchers("/api/ccg1/deleteUser/**").permitAll()

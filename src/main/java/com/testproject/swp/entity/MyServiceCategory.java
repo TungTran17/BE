@@ -1,30 +1,30 @@
-package com.testproject.swp.entity;
+// package com.testproject.swp.entity;
 
-import lombok.*;
+// import lombok.*;
 
-import javax.persistence.*;
+// import javax.persistence.*;
 
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Getter
-@Setter
-@Table(name = "category")
-public class MyServiceCategory {
+// @Entity
+// @NoArgsConstructor
+// @AllArgsConstructor
+// @Builder
+// @Getter
+// @Setter
+// @Table(name = "category")
+// public class MyServiceCategory {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true,name = "category_id")
-    private int categoryid;
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     @Column(unique = true,name = "category_id")
+//     private int categoryid;
 
-    @Column(unique = true,name = "category_name")
-    private String categoryname;
+//     @Column(unique = true,name = "category_name")
+//     private String categoryname;
 
-    @Column(unique = true,name = "icon")
-    private String icon;
-
-
+//     @Column(unique = true,name = "icon")
+//     private String icon;
 
 
-}
+
+
+// }
