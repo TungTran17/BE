@@ -76,6 +76,7 @@ public class MyServiceController {
     public ServiceDTO addservice(@RequestBody MyService myServiceMap)
             throws CustomBadReqEx, CustomNotFoundEx {
         ServiceDTO serviceDTO = new ServiceDTO();
+        System.out.println(myServiceMap.getStatus());
         //demodata
 //        {
 //            "title": "tieu de2",
@@ -90,6 +91,7 @@ public class MyServiceController {
 //                "status":0
 //        }
         //
+        System.out.println(myServiceMap.getBi());
         try{
             if(myserviceService.createMyService(myServiceMap)==true){
                 serviceDTO.status=202;

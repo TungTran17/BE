@@ -216,6 +216,7 @@ public class myserviceServiceImpl implements MyserviceService {
         return myServiceList;
     }
 
+   
     @Override
     public boolean createMyService(MyService myServiceMap) {
         MyService myService = MyService.builder()
@@ -228,6 +229,8 @@ public class myserviceServiceImpl implements MyserviceService {
                 .detail(myServiceMap.getDetail())
                 .vote(myServiceMap.getVote())
                 .build();
+
+                System.out.println(myService.getBi()+"a");
         MyService savedService = myServiceRepository.save(myService);
         MyServiceImage myServiceImage = MyServiceImage.builder()
                 .imageid(savedService.getId())
