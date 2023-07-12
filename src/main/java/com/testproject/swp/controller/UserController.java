@@ -3,6 +3,7 @@ package com.testproject.swp.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,14 +21,15 @@ import com.testproject.swp.model.user.dto.UserDTOCreate;
 import com.testproject.swp.model.user.dto.UserDTOLoginRequest;
 import com.testproject.swp.model.user.dto.UserDTOResponse;
 import com.testproject.swp.model.user.dto.UserDTOUpdate;
+import com.testproject.swp.payload.LoginMessage;
 import com.testproject.swp.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@CrossOrigin
 @RequiredArgsConstructor
 @RequestMapping("/api/ccg1")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     private final UserService userService;
@@ -38,27 +40,41 @@ public class UserController {
         return userService.authenticate(userDTOLoginReqMap);
     }
 
+    // @PostMapping("/login")
+    // public ResponseEntity<?> login(@RequestBody UserDTOLoginRequest
+    // userDTOLoginRequest)
+    // throws CustomBadReqEx, CustomNotFoundEx {
+    // LoginMessage loginMessage = userService.login(userDTOLoginRequest);
+    // return ResponseEntity.ok(loginMessage);
+    // }
+
     @PostMapping("/register")
-    public Map<String, UserDTOResponse> registerUser(@RequestBody Map<String, UserDTOCreate> userDTOCreateReqMap) {
+    public Map<String, UserDTOResponse> registerUser(@RequestBody Map<String, UserDTOCreate> userDTOCreateReqMap)
+            throws CustomNotFoundEx {
         return userService.registerUser(userDTOCreateReqMap);
     }
+    // @PostMapping("/register")
+    // public UserDTOResponse registerUser(@RequestBody UserDTOCreate
+    // userDTOCreateReqMap) {
+    // return userService.registerUser(userDTOCreateReqMap);
+    // }
 
-    @GetMapping("/user")
-    public Map<String, UserDTOResponse> getCurrentUser() throws CustomNotFoundEx {
-        return userService.getCurrentUser();
-    }
+    // @GetMapping("/user")
+    // public Map<String, UserDTOResponse> getCurrentUser() throws CustomNotFoundEx {
+    //     return userService.getCurrentUser();
+    // }
 
-    @GetMapping("/profile/{name}")
-    public Map<String, GetUsersDTO> getProfile(@PathVariable String name) throws CustomNotFoundEx {
-        return userService.getProfile(name);
-    }
+    // @GetMapping("/profile/{name}")
+    // public Map<String, GetUsersDTO> getProfile(@PathVariable String name) throws CustomNotFoundEx {
+    //     return userService.getProfile(name);
+    // }
 
-    @PutMapping("/user")
-    public Map<String, UserDTOResponse> updateCurrentUser(@RequestBody Map<String, UserDTOUpdate> userDTOUpdateMap)
-            throws CustomNotFoundEx {
-        System.out.println("dsd");
-        return userService.updateCurrentUser(userDTOUpdateMap);
-    }
+    // @PutMapping("/user")
+    // public Map<String, UserDTOResponse> updateCurrentUser(@RequestBody Map<String, UserDTOUpdate> userDTOUpdateMap)
+    //         throws CustomNotFoundEx {
+    //     System.out.println("dsd");
+    //     return userService.updateCurrentUser(userDTOUpdateMap);
+    // }
 
     @GetMapping("/users/listUser")
     public List<GetUsersDTO> getUserList() throws CustomNotFoundEx {
@@ -81,5 +97,4 @@ public class UserController {
     public GetUsersDTO deleteUser(@PathVariable int id) throws CustomNotFoundEx {
         return userService.deleteUser(id);
     }
-
 }

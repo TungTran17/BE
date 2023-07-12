@@ -7,11 +7,16 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
 import com.testproject.swp.entity.User;
+
 @EnableJpaRepositories
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    //public Optional<User> findOneByEmailAndPassword(String email, String user_password);
+    // public Optional<User> findOneByEmailAndPassword(String email, String
+    // user_password);
     public Optional<User> findByEmail(String email);
-    public Optional<User> findByName(String name);
-    
+
+    public Optional<User> findOneByEmailAndPassword(String email, String password);
+
+    public User findByName(String name);
+
 }

@@ -17,8 +17,8 @@ public class UserMapper {
                 .address(user.getAddress())
                 .email(user.getEmail())
                 .phone(user.getPhone())
-                .roleID(user.getRoleID())
-                .status(user.getStatus())
+                //.roleID(user.getRoleID())
+                //.status(user.getStatus())
                 .build();
     }
 
@@ -31,8 +31,8 @@ public class UserMapper {
                 .address(userDTOCreate.getAddress())
                 .email(userDTOCreate.getEmail())
                 .phone(userDTOCreate.getPhone())
-                .roleID(userDTOCreate.getRoleID())
-                .status(userDTOCreate.getStatus())
+                //.roleID(userDTOCreate.getRoleID())
+                //.status(userDTOCreate.getStatus())
                 .build();
     }
 
@@ -73,8 +73,8 @@ public class UserMapper {
                 .address(user.getAddress())
                 .email(user.getEmail())
                 .phone(user.getPhone())
-                .roleID(user.getRoleID())
-                .status(user.getStatus())
+                // .roleID(user.getRoleID())
+                // .status(user.getStatus())
                 .build();
     }
 
@@ -82,12 +82,12 @@ public class UserMapper {
         return UserDTOResponse.builder()
                 .name(user.getName())
                 .gender(user.getGender())
-                .token(user.getToken())
+                //.token(user.getToken())
                 .address(user.getAddress())
                 .email(user.getEmail())
                 .phone(user.getPhone())
-                .roleID(user.getRoleID())
-                .status(user.getStatus())
+                //.roleID(user.getRoleID())
+                //.status(user.getStatus())
                 .build();
     }
 }

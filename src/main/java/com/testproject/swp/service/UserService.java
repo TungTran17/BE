@@ -10,27 +10,37 @@ import com.testproject.swp.model.user.dto.UserDTOCreate;
 import com.testproject.swp.model.user.dto.UserDTOLoginRequest;
 import com.testproject.swp.model.user.dto.UserDTOResponse;
 import com.testproject.swp.model.user.dto.UserDTOUpdate;
+import com.testproject.swp.payload.LoginMessage;
 
 public interface UserService {
 
-    public Map<String, UserDTOResponse> authenticate(Map<String, UserDTOLoginRequest> userDTOLoginRequestMap)
-            throws CustomBadReqEx, CustomNotFoundEx;
+        public Map<String, UserDTOResponse> authenticate(Map<String,
+        UserDTOLoginRequest> userDTOLoginRequestMap)
+        throws CustomBadReqEx, CustomNotFoundEx;
 
-    public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreate> userDTOCreateReqMap);
+        public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreate>
+        userDTOCreateReqMap) throws CustomNotFoundEx;
 
-    public Map<String, UserDTOResponse> getCurrentUser() throws CustomNotFoundEx;
+        // public Map<String, UserDTOResponse> getCurrentUser() throws CustomNotFoundEx;
 
-    public Map<String, GetUsersDTO> getProfile(String name) throws CustomNotFoundEx;
+        // public Map<String, GetUsersDTO> getProfile(String name) throws
+        // CustomNotFoundEx;
 
-    public List<GetUsersDTO> getUserList() throws CustomNotFoundEx;
+        public List<GetUsersDTO> getUserList() throws CustomNotFoundEx;
 
-    public GetUsersDTO getUserByID(int id) throws CustomNotFoundEx;
+        public GetUsersDTO getUserByID(int id) throws CustomNotFoundEx;
 
-    public GetUsersDTO updateUser(UserDTOUpdate userDTOUpdate) throws CustomNotFoundEx;
+        public GetUsersDTO updateUser(UserDTOUpdate userDTOUpdate) throws CustomNotFoundEx;
 
-    public GetUsersDTO deleteUser(int id) throws CustomNotFoundEx;
+        public GetUsersDTO deleteUser(int id) throws CustomNotFoundEx;
 
-    public Map<String, UserDTOResponse> updateCurrentUser(Map<String, UserDTOUpdate> userDTOUpdateMap)
-            throws CustomNotFoundEx;
+        // public UserDTOResponse registerUser(UserDTOCreate userDTOCreateReqMap);
+
+        // public LoginMessage login(UserDTOLoginRequest userDTOLoginRequest);
+
+
+        // public Map<String, UserDTOResponse> updateCurrentUser(Map<String,
+        // UserDTOUpdate> userDTOUpdateMap)
+        // throws CustomNotFoundEx;
 
 }

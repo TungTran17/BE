@@ -1,9 +1,11 @@
 package com.testproject.swp.model.user.dto;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Builder
 public class UserDTOCreate {
     private String name;
@@ -13,6 +15,6 @@ public class UserDTOCreate {
     private String password;
     private String email;
     private String phone;
-    private int roleID;
-    private int status;
+    //private int roleID;
+    //private int status;
 }

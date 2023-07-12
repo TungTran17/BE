@@ -11,7 +11,7 @@ public class GetMyService {
     private String title;
     private String bi;
     private String createddate;
-    private String categoryid;
+    private int categoryid;
     private String price;
     private String discount;
     private String detail;

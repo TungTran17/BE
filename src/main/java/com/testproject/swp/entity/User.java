@@ -28,7 +28,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-@Table(name = "userTB")
+@Table(name = "user_tb")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,4 +51,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Reservation> reservations;
+
+    @OneToMany(mappedBy = "user")
+    private List<ReservationDetail> reservationDetails;
 }

@@ -16,6 +16,6 @@ public class UserDTOResponse {
     private String address;
     private String email;
     private String phone;
-    private int roleID;
-    private int status;
+    //private int roleID;
+    //private int status;
 }

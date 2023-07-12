@@ -30,7 +30,7 @@ public class MyService {
     private String createddate;
 
     @Column(name = "category_id")
-    private String categoryid;
+    private int categoryid;
 
     @Column(name = "service_price")
     private String price;
