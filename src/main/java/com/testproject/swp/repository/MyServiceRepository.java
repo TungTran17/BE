@@ -33,28 +33,10 @@ public interface MyServiceRepository extends JpaRepository<MyService, Integer> {
             "AND (:category = -1 OR m.categoryid = :category)")
     Page<MyService> findAllByStatusAndTitle(int status, String title, String bi, int category, Pageable pageable);
 
+    @Query("SELECT m FROM MyService m  WHERE (:category = -1 OR m.categoryid =:category) AND m.myServiceStatus.servicestatus =0")
+    List<MyService> findAllByCategory(int category);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Query("SELECT m FROM MyService m WHERE m.id =:id")
     MyService findById(int id);
     List<MyService> findByTitleContainingIgnoreCase(String title);
 

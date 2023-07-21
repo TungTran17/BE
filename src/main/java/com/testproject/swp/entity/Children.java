@@ -1,12 +1,6 @@
 package com.testproject.swp.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,16 +14,21 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "children_tb")
+@Table(name = "children")
 public class Children {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "children_id")
     private int childrenID;
+
+    @Column(name = "children_name")
     private String childrenName;
+    @Column(name = "children_gender")
     private int childrenGender;
+    @Column(name = "children_age")
     private int childrenAge;
 
     @ManyToOne
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "user_id")
     private User user;
 }

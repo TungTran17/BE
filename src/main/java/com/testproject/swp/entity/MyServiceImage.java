@@ -23,8 +23,4 @@ public class MyServiceImage {
 
     @Column(name = "image_link")
     private String imagelink;
-
-
-
-
 }

@@ -19,7 +19,8 @@ public interface MyserviceService {
     public boolean DeleteServiceByID(int id) throws CustomNotFoundEx;
 
     public List<GetMyService> getServiceListPage(int status,String title,String bi,int cateid,int orderid, int index, int pageSize) throws CustomNotFoundEx;
-
+    
+    public List<GetMyService> getServiceList(int cateid) throws CustomNotFoundEx ;
 
 
 

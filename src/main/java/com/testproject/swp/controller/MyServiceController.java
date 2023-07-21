@@ -27,7 +27,8 @@ public class MyServiceController {
 
     private final MyserviceService myserviceService;
 
-    /*dw
+    /*
+     * dw
      * Lấy danh sách theo title, status, bi và phân bố theo page ( phân trang )
      * status = -1 lấy hết
      * title = '' lấy hết
@@ -48,18 +49,20 @@ public class MyServiceController {
      * 
      */
     @GetMapping("/Service/listservices/{status}/{title}/{bi}/{cateid}/{sortfield}/{indexPage}/{sizePage}")
-    public ServiceDTO getServices(@PathVariable int status, @PathVariable String title, @PathVariable String bi,@PathVariable int cateid,@PathVariable int sortfield,
+    public ServiceDTO getServices(@PathVariable int status, @PathVariable String title, @PathVariable String bi,
+            @PathVariable int cateid, @PathVariable int sortfield,
             @PathVariable int indexPage, @PathVariable int sizePage) throws CustomNotFoundEx, JsonProcessingException {
 
         ServiceDTO serviceDTO = new ServiceDTO();
-        try{
-            serviceDTO.setListServices(myserviceService.getServiceListPage(status,title,bi,cateid,sortfield,indexPage,sizePage));
-        }catch (Exception ex){
+        try {
+            serviceDTO.setListServices(
+                    myserviceService.getServiceListPage(status, title, bi, cateid, sortfield, indexPage, sizePage));
+        } catch (Exception ex) {
             serviceDTO.setStatus(404);
         }
-        if(serviceDTO.getListServices().size()==0){
+        if (serviceDTO.getListServices().size() == 0) {
             serviceDTO.setStatus(200);
-        }else{
+        } else {
             serviceDTO.setStatus(202);
         }
         ObjectMapper objectMapper = new ObjectMapper();
@@ -67,9 +70,31 @@ public class MyServiceController {
         return serviceDTO;
     }
 
-    /*CASE 2
+    @GetMapping("/Service/countService/{cateid}")
+    public ServiceDTO getCountServices( @PathVariable int cateid ) throws CustomNotFoundEx, JsonProcessingException {
+
+        ServiceDTO serviceDTO = new ServiceDTO();
+        try {
+            serviceDTO.setListServices(
+                    myserviceService.getServiceList(cateid));
+        } catch (Exception ex) {
+            serviceDTO.setStatus(404);
+        }
+        if (serviceDTO.getListServices().size() == 0) {
+            serviceDTO.setStatus(200);
+        } else {
+            serviceDTO.setStatus(202);
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(serviceDTO);
+        return serviceDTO;
+    }
+
+    /*
+     * CASE 2
      *
-     * Tạo API tạo mới service đầu vào nhận GetMyService trả về serviceDTO ( status thôi)
+     * Tạo API tạo mới service đầu vào nhận GetMyService trả về serviceDTO (
+     * status thôi)
      * Note: Có thể sửa GetMyService cho phù hợp
      */
     @PostMapping("/Service/listservices/addservice")
@@ -77,31 +102,30 @@ public class MyServiceController {
             throws CustomBadReqEx, CustomNotFoundEx {
         ServiceDTO serviceDTO = new ServiceDTO();
         System.out.println(myServiceMap.getStatus());
-        //demodata
-//        {
-//            "title": "tieu de2",
-//                "bi": "moi nhe",
-//                "createddate": "2000/02/02",
-//                "categoryid":1,
-//                "price": "1",
-//                "discount": "1",
-//                "detail": "chi tiet",
-//                "vote": "999",
-//                "imagelink": "anh ne",
-//                "status":0
-//        }
+        // demodata
+        // {
+        // "title": "tieu de2",
+        // "bi": "moi nhe",
+        // "createddate": "2000/02/02",
+        // "categoryid":1,
+        // "price": "1",
+        // "discount": "1",
+        // "detail": "chi tiet",
+        // "vote": "999",
+        // "imagelink": "anh ne",
+        // "status":0
+        // }
         //
         System.out.println(myServiceMap.getBi());
-        try{
-            if(myserviceService.createMyService(myServiceMap)==true){
-                serviceDTO.status=202;
-            }else{
-                serviceDTO.status=200;
+        try {
+            if (myserviceService.createMyService(myServiceMap) == true) {
+                serviceDTO.status = 202;
+            } else {
+                serviceDTO.status = 200;
             }
-        }catch(Exception ex){
-            serviceDTO.status=200;
+        } catch (Exception ex) {
+            serviceDTO.status = 200;
         }
-
 
         return serviceDTO;
     }
@@ -111,16 +135,15 @@ public class MyServiceController {
             throws CustomBadReqEx, CustomNotFoundEx {
         ServiceDTO serviceDTO = new ServiceDTO();
         System.out.println("Hello World");
-        try{
-            if(myserviceService.UpdateMyService(myServiceMap)==true){
-                serviceDTO.status=202;
-            }else{
-                serviceDTO.status=200;
+        try {
+            if (myserviceService.UpdateMyService(myServiceMap) == true) {
+                serviceDTO.status = 202;
+            } else {
+                serviceDTO.status = 200;
             }
-        }catch(Exception ex){
-            serviceDTO.status=200;
+        } catch (Exception ex) {
+            serviceDTO.status = 200;
         }
-
 
         return serviceDTO;
     }
@@ -129,39 +152,40 @@ public class MyServiceController {
     public ServiceDTO deleteservice(@PathVariable int id)
             throws CustomBadReqEx, CustomNotFoundEx {
         ServiceDTO serviceDTO = new ServiceDTO();
-        try{
-            if(myserviceService.deletService(id)==true){
-                serviceDTO.status=202;
-            }else{
-                serviceDTO.status=200;
+        try {
+            if (myserviceService.deletService(id) == true) {
+                serviceDTO.status = 202;
+            } else {
+                serviceDTO.status = 200;
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex);
-            serviceDTO.status=200;
+            serviceDTO.status = 200;
         }
         return serviceDTO;
     }
 
-
-    /*CASE 3
+    /*
+     * CASE 3
      *
-     * Tạo API xóa  service theo id trả về serviceDTO ( status thôi)
+     * Tạo API xóa service theo id trả về serviceDTO ( status thôi)
      * Note: Kiêm tra có hay ko trước khi xóa --> hạn chế lỗi hệ thông
      */
     @PostMapping("/Service/listservice/deletService/{id}")
     public ServiceDTO DeletServiceById(@PathVariable int id) throws CustomNotFoundEx {
         ServiceDTO serviceDTO = new ServiceDTO();
-        if(myserviceService.DeleteServiceByID(id)==true){
-            serviceDTO.status=202;
-        }else{
-            serviceDTO.status=200;
+        if (myserviceService.DeleteServiceByID(id) == true) {
+            serviceDTO.status = 202;
+        } else {
+            serviceDTO.status = 200;
         }
         return serviceDTO;
     }
 
-    /*CASE 4
+    /*
+     * CASE 4
      *
-     * Tạo API update  service theo GetMyService trả về serviceDTO ( status thôi)
+     * Tạo API update service theo GetMyService trả về serviceDTO ( status thôi)
      * Note: Có thể sửa GetMyService cho phù hợp
      */
     @PostMapping("/Service/listservices/updateservice")
@@ -169,18 +193,20 @@ public class MyServiceController {
             throws CustomBadReqEx, CustomNotFoundEx {
         ServiceDTO serviceDTO = new ServiceDTO();
         MyService myService = myserviceService.FindServiceByID(myServiceMap.getId());
-        if(myService==null){
+        if (myService == null) {
             serviceDTO.setStatus(200);
-            return  serviceDTO;
+            return serviceDTO;
         }
-        myService=myServiceMap;
-        if(myserviceService.updateservice(myServiceMap)==true){
-            serviceDTO.status=202;
-        }else{
-            serviceDTO.status=200;
+        myService = myServiceMap;
+        if (myserviceService.updateservice(myServiceMap) == true) {
+            serviceDTO.status = 202;
+        } else {
+            serviceDTO.status = 200;
         }
         return serviceDTO;
     }
+
+
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -189,16 +215,25 @@ public class MyServiceController {
     public List<GetMyService> getServiceList() throws CustomNotFoundEx {
         return myserviceService.getServiceList();
     }
-//    @GetMapping("/Service/listservicepage/{status}/{title}/{bi}/{index}/{pageSize}")
-//    public List<GetMyService> getServiceListPage(@PathVariable int status,@PathVariable String title,@PathVariable String bi,@PathVariable int index, @PathVariable int pageSize ) throws CustomNotFoundEx {
-//        return myserviceService.getServiceListPage(status,title,bi,index,  pageSize);
-//    }
+    // @GetMapping("/Service/listservicepage/{status}/{title}/{bi}/{index}/{pageSize}")
+    // public List<GetMyService> getServiceListPage(@PathVariable int
+    // status,@PathVariable String title,@PathVariable String bi,@PathVariable int
+    // index, @PathVariable int pageSize ) throws CustomNotFoundEx {
+    // return myserviceService.getServiceListPage(status,title,bi,index, pageSize);
+    // }
 
     // trả về danh sách theo title
     @GetMapping("/Service/listservice/{title}")
     public List<GetMyService> getServiceBytitle(@PathVariable String title) throws CustomNotFoundEx {
         return myserviceService.getServiceListbyname(title);
     }
+
+    @GetMapping("/Service/GetServiceById/{id}")
+    public MyService getServiceById(@PathVariable int id) throws CustomNotFoundEx {
+        return myserviceService.FindServiceByID(id);
+    }
+
+    
 
     // trả về danh sách theo bi
     @GetMapping("/Service/listservice/bi/{bi}")
@@ -248,6 +283,8 @@ public class MyServiceController {
     public List<GetMyService> getServiceBycategorysasc() throws CustomNotFoundEx {
         return myserviceService.getServiceListSortbycategoryASC();
     }
+
+
 
     @GetMapping("/Service/listservice/categorydesc")
     public List<GetMyService> getServiceBycategorysdesc() throws CustomNotFoundEx {

@@ -54,7 +54,9 @@ public class myserviceServiceImpl implements MyserviceService {
 
     @Override
     public MyService FindServiceByID(int id) throws CustomNotFoundEx {
+        MyService myService = myServiceRepository.findById(id);
         return myServiceRepository.findById(id);
+
     }
 
     @Override
@@ -87,6 +89,18 @@ public class myserviceServiceImpl implements MyserviceService {
         }
         Page<MyService> page = myServiceRepository.findAllByStatusAndTitle(status, title, bi, cateid, pageable);
 
+        List<GetMyService> myServiceList = new ArrayList<>();
+        for (MyService myService : page) {
+            myServiceList.add(MyServiceMapper.toGetMedecine(myService));
+        }
+        return myServiceList;
+    }
+
+    @Override
+    public List<GetMyService> getServiceList(int cateid) throws CustomNotFoundEx {
+        Pageable pageable;
+        List<MyService> page = new ArrayList<>();
+        page = myServiceRepository.findAllByCategory(cateid);
         List<GetMyService> myServiceList = new ArrayList<>();
         for (MyService myService : page) {
             myServiceList.add(MyServiceMapper.toGetMedecine(myService));
@@ -238,7 +252,7 @@ public class myserviceServiceImpl implements MyserviceService {
                 .imagelink(myServiceMap.getImagelink())
                 .build();
         MyServiceImage savedImage = myServiceImageRepository.save(myServiceImage);
-        savedService.setMyServiceImage(savedImage);
+//        savedService.setMyServiceImage(savedImage);
         MyServiceStatus myServiceStatus = MyServiceStatus.builder()
                 .statusid(savedService.getId())
                 .serviceid(savedService.getId())
@@ -282,7 +296,7 @@ public class myserviceServiceImpl implements MyserviceService {
         System.out.println(myServiceImage);
         MyServiceImage savedImage = myServiceImageRepository.save(myServiceImage);
         savedImage.setImageid(savedService.getId());
-        savedService.setMyServiceImage(savedImage);
+//        savedService.setMyServiceImage(savedImage);
         MyServiceStatus myServiceStatus = MyServiceStatus.builder()
                 .statusid(savedService.getId())
                 .serviceid(savedService.getId())

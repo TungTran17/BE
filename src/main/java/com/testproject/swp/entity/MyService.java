@@ -3,6 +3,7 @@ package com.testproject.swp.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -48,9 +49,12 @@ public class MyService {
     private String vote;
 
 
-    @OneToOne
-    @JoinColumn(name = "service_id", referencedColumnName = "service_id", insertable = false, updatable = false)
-    private MyServiceImage myServiceImage;
+    @OneToMany(mappedBy = "serviceid", cascade = CascadeType.ALL)
+    private List<MyServiceImage> myServiceImages;
+
+//    @OneToOne
+//    @JoinColumn(name = "service_id", referencedColumnName = "service_id", insertable = false, updatable = false)
+//    private MyServiceImage myServiceImage;
     @Transient
     private String imagelink;
 
@@ -70,9 +74,10 @@ public class MyService {
 
     @PostLoad
     private void onLoad() {
-        if (myServiceImage != null) {
-            imagelink = myServiceImage.getImagelink();
+        if (myServiceImages != null) {
+            imagelink = myServiceImages.get(0).getImagelink();
         }
+//        imagelink = myServiceImages.get(0).getImagelink();
         if (myServiceStatus != null) {
             status = myServiceStatus.getServicestatus();
         }
