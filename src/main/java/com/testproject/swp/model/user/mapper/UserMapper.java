@@ -1,11 +1,14 @@
 package com.testproject.swp.model.user.mapper;
 
+import com.testproject.swp.entity.Role;
 import com.testproject.swp.entity.User;
 import com.testproject.swp.model.user.dto.GetUsersDTO;
 import com.testproject.swp.model.user.dto.UserDTO;
 import com.testproject.swp.model.user.dto.UserDTOCreate;
 import com.testproject.swp.model.user.dto.UserDTOResponse;
 import com.testproject.swp.model.user.dto.UserDTOUpdate;
+
+import java.util.stream.Collectors;
 
 
 public class UserMapper {
@@ -65,6 +68,9 @@ public class UserMapper {
     }
 
     public static GetUsersDTO toGetUser(User user) {
+        String roleName = String.join(", ", user.getRoles().stream().map(Role::getRoleName).collect(Collectors.toList()));
+
+
         return GetUsersDTO.builder()
                 //.password(user.getPassword())
                 .userID(user.getUserID())
@@ -73,6 +79,7 @@ public class UserMapper {
                 .address(user.getAddress())
                 .email(user.getEmail())
                 .phone(user.getPhone())
+                .roleName(roleName)
                 // .roleID(user.getRoleID())
                 // .status(user.getStatus())
                 .build();

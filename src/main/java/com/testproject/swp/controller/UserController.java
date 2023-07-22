@@ -97,4 +97,6 @@ public class UserController {
     public GetUsersDTO deleteUser(@PathVariable int id) throws CustomNotFoundEx {
         return userService.deleteUser(id);
     }
+
+
 }

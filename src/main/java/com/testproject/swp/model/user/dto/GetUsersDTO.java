@@ -16,4 +16,6 @@ public class GetUsersDTO {
     private String phone;
     private int roleID;
     private int status;
+    private String roleName;
+
 }
