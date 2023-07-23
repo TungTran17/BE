@@ -70,7 +70,6 @@ public class UserMapper {
     public static GetUsersDTO toGetUser(User user) {
         String roleName = String.join(", ", user.getRoles().stream().map(Role::getRoleName).collect(Collectors.toList()));
 
-
         return GetUsersDTO.builder()
                 //.password(user.getPassword())
                 .userID(user.getUserID())
@@ -78,6 +77,8 @@ public class UserMapper {
                 .gender(user.getGender())
                 .address(user.getAddress())
                 .email(user.getEmail())
+                .status(user.getStatus())
+                .roleID(user.getRoles().get(0).getRoleID())
                 .phone(user.getPhone())
                 .roleName(roleName)
                 // .roleID(user.getRoleID())

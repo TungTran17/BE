@@ -6,6 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.testproject.swp.entity.Reservation;
+import com.testproject.swp.entity.ReservationDetail;
+import com.testproject.swp.entity.Role;
+import com.testproject.swp.repository.RoleRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,12 +38,15 @@ import com.testproject.swp.util.JWTTokenUtil;
 
 import lombok.RequiredArgsConstructor;
 
+import javax.transaction.Transactional;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private  final RoleRepository repository;
     private final JWTTokenUtil jwtTokenUtil;
 
     @Override
@@ -76,13 +87,36 @@ public class UserServiceImpl implements UserService {
     // return buildDTOResponse(user);
     // }
 
+    @Transactional
     @Override
     public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreate> userDTOCreateReqMap) {
         UserDTOCreate createUserDTOCreate = userDTOCreateReqMap.get("user");
         User user = UserMapper.toUserCreateUser(createUserDTOCreate);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user = userRepository.save(user);
+        List<Role> roles = new ArrayList<>();
+        Role role = repository.findById(1).get();
+        roles.add(role);
+        user.setRoles(roles);
+        try {
+            user =  userRepository.save(user);
+        }catch (Exception e){
+            System.out.println("Lỗi" + e.getMessage());
+        }
+
         return buildDTOResponse(user);
+//        try {
+//            user = userRepository.save(user);
+//        }catch (Exception e){
+//
+//        }
+//
+//        Optional<User> userOptional = userRepository.findById(user.getUserID());
+//                List<Role> roles = new ArrayList<>();
+//        Role role = repository.findById(1).get();
+//        roles.add(role);
+////        userOptional.get().getRoles().a;
+//        user = userRepository.save( userOptional.get());
+//        return buildDTOResponse(user);
     }
 
     private Map<String, UserDTOResponse> buildDTOResponse(User user) {
@@ -188,10 +222,59 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public GetUsersDTO updateUser(UserDTOUpdate userDTOUpdate) throws CustomNotFoundEx {
-        User user = UserMapper.toUserUpdateUser(userDTOUpdate);
-        user = userRepository.save(user);
-        return UserMapper.toGetUser(user);
+    public  List<GetUsersDTO> getListUsersPage(String email, int idRole, int status, int indexPage, int sizePage) throws CustomNotFoundEx {
+        Pageable pageable = PageRequest.of(indexPage - 1, sizePage, Sort.by("userID").ascending());
+        Page<User> page = userRepository.getListUsersPage(email, idRole, status, pageable);
+
+        List<GetUsersDTO> userList = new ArrayList<>();
+
+        for (User user : page) {
+            userList.add(UserMapper.toGetUser(user));
+        }
+        return userList;
+    }
+
+    @Override
+    public int countListUsers(String email, int idRole, int status) throws CustomNotFoundEx {
+
+        return userRepository.countListUsersPage(email,idRole,status);
+    }
+
+    @Override
+    public GetUsersDTO updateUser(GetUsersDTO getUsersDTO) throws CustomNotFoundEx {
+        Optional<User> userOptional = userRepository.findById(getUsersDTO.getUserID());
+        User user;
+      if(userOptional.isPresent()){
+          user = userOptional.get();
+      }else {
+          user = new User();
+          user.setPassword("123");
+          List<Reservation> reservations = new ArrayList<>();
+          user.setReservations(reservations);
+          List<ReservationDetail> reservationDetails = new ArrayList<>();
+          user.setReservationDetails(reservationDetails);
+      }
+            user.setName(getUsersDTO.getName());
+            user.setEmail(getUsersDTO.getEmail());
+            user.setPhone(getUsersDTO.getPhone());
+            user.setAddress(getUsersDTO.getAddress());
+            user.setGender(getUsersDTO.getGender());
+             user.setStatus(getUsersDTO.getStatus());
+
+            List<Role> roles = new ArrayList<>();
+            Role role = repository.findById(getUsersDTO.getRoleID()).get();
+            roles.add(role);
+
+            user.setRoles(roles);
+            try {
+//                List<Reservation> reservations = new ArrayList<>();
+//                if(user.setReservations(reservations));
+                User  usersDTO =  userRepository.save(user);
+                return UserMapper.toGetUser(usersDTO);
+            }catch (Exception e){
+                throw new CustomNotFoundEx(CustomError.builder().code("400").message(e.getMessage()).build());
+            }
+
     }
 
     @Override
@@ -200,6 +283,17 @@ public class UserServiceImpl implements UserService {
         if (userOptional.isPresent()) {
             userRepository.deleteById(id);
             return UserMapper.toGetUser(userOptional.get());
+        } else {
+            throw new CustomNotFoundEx(CustomError.builder().code("404").message("User not found").build());
+        }
+    }
+
+    @Override
+    public void activeUser(int id) throws CustomNotFoundEx {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            userOptional.get().setStatus(userOptional.get().getStatus()==1?0:1);
+            userRepository.save(userOptional.get());
         } else {
             throw new CustomNotFoundEx(CustomError.builder().code("404").message("User not found").build());
         }

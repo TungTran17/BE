@@ -64,10 +64,17 @@ public class UserController {
     //     return userService.getCurrentUser();
     // }
 
-    // @GetMapping("/profile/{name}")
-    // public Map<String, GetUsersDTO> getProfile(@PathVariable String name) throws CustomNotFoundEx {
-    //     return userService.getProfile(name);
-    // }
+     @GetMapping("/Users/{email}/{idRole}/{status}/{indexPage}/{sizePage}")
+     public  List<GetUsersDTO> getListUsersPage(@PathVariable String email,@PathVariable int idRole,@PathVariable int status
+             , @PathVariable int indexPage, @PathVariable int sizePage) throws CustomNotFoundEx {
+         return userService.getListUsersPage(email,idRole,status,indexPage,sizePage);
+     }
+
+    @GetMapping("/Users/count/{email}/{idRole}/{status}")
+    public  int countListUsers(@PathVariable String email,@PathVariable int idRole,@PathVariable int status ) throws CustomNotFoundEx {
+        return userService.countListUsers(email,idRole,status);
+    }
+
 
     // @PutMapping("/user")
     // public Map<String, UserDTOResponse> updateCurrentUser(@RequestBody Map<String, UserDTOUpdate> userDTOUpdateMap)
@@ -86,16 +93,22 @@ public class UserController {
         return userService.getUserByID(id);
     }
 
-    @PutMapping("/users/{id}")
-    public GetUsersDTO updateUser(@PathVariable int id, @RequestBody UserDTOUpdate userDTOUpdate)
+    @PutMapping("/users/update")
+    public GetUsersDTO updateUser(@RequestBody GetUsersDTO getUsersDTO)
             throws CustomNotFoundEx {
-        userDTOUpdate.setUserID(id);
-        return userService.updateUser(userDTOUpdate);
+        return userService.updateUser(getUsersDTO);
     }
 
     @DeleteMapping("/deleteUser/{id}")
     public GetUsersDTO deleteUser(@PathVariable int id) throws CustomNotFoundEx {
         return userService.deleteUser(id);
+    }
+
+
+
+    @GetMapping("/active/{id}")
+    public void activeUser(@PathVariable int id) throws CustomNotFoundEx {
+         userService.activeUser(id);
     }
 
 

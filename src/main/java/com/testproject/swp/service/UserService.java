@@ -29,10 +29,14 @@ public interface UserService {
         public List<GetUsersDTO> getUserList() throws CustomNotFoundEx;
 
         public GetUsersDTO getUserByID(int id) throws CustomNotFoundEx;
+        public  List<GetUsersDTO> getListUsersPage(String email, int idRole, int status, int indexPage, int sizePage) throws CustomNotFoundEx;
 
-        public GetUsersDTO updateUser(UserDTOUpdate userDTOUpdate) throws CustomNotFoundEx;
+        public  int countListUsers(String email, int idRole, int status) throws CustomNotFoundEx;
+
+        public GetUsersDTO updateUser(GetUsersDTO userDTOUpdate) throws CustomNotFoundEx;
 
         public GetUsersDTO deleteUser(int id) throws CustomNotFoundEx;
+        public void activeUser(int id) throws CustomNotFoundEx;
 
         // public UserDTOResponse registerUser(UserDTOCreate userDTOCreateReqMap);
 
