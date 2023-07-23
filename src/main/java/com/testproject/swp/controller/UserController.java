@@ -93,6 +93,11 @@ public class UserController {
         return userService.getUserByID(id);
     }
 
+    @GetMapping("/users/role/{idRole}")
+    public List<GetUsersDTO> getUserByIdRole(@PathVariable int idRole) throws CustomNotFoundEx {
+        return userService.getUserByIdRole(idRole);
+    }
+
     @PutMapping("/users/update")
     public GetUsersDTO updateUser(@RequestBody GetUsersDTO getUsersDTO)
             throws CustomNotFoundEx {

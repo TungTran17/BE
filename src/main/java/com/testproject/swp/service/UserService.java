@@ -29,6 +29,7 @@ public interface UserService {
         public List<GetUsersDTO> getUserList() throws CustomNotFoundEx;
 
         public GetUsersDTO getUserByID(int id) throws CustomNotFoundEx;
+        public List<GetUsersDTO> getUserByIdRole(int id) throws CustomNotFoundEx;
         public  List<GetUsersDTO> getListUsersPage(String email, int idRole, int status, int indexPage, int sizePage) throws CustomNotFoundEx;
 
         public  int countListUsers(String email, int idRole, int status) throws CustomNotFoundEx;

@@ -1,5 +1,6 @@
 package com.testproject.swp.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -22,6 +23,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     public User findByName(String name);
 
+    @Query("SELECT DISTINCT  u FROM User u " +
+            "JOIN u.roles r " +
+            "WHERE   (:idRole = -1 OR r.roleID = :idRole)")
+    public List<User> findByRole(int idRole);
 
     @Query("SELECT DISTINCT  u FROM User u " +
             "JOIN u.roles r " +

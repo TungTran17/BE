@@ -222,6 +222,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<GetUsersDTO> getUserByIdRole(int id) throws CustomNotFoundEx {
+        List<User> userOptional = userRepository.findByRole(id);
+        if (userOptional != null ) {
+            List<GetUsersDTO> list = new ArrayList<>();
+            for (User user: userOptional) {
+                list.add(UserMapper.toGetUser(user));
+            }
+            return list;
+        } else {
+            throw new CustomNotFoundEx(CustomError.builder().code("404").message("User not found").build());
+        }
+    }
+
+    @Override
     public  List<GetUsersDTO> getListUsersPage(String email, int idRole, int status, int indexPage, int sizePage) throws CustomNotFoundEx {
         Pageable pageable = PageRequest.of(indexPage - 1, sizePage, Sort.by("userID").ascending());
         Page<User> page = userRepository.getListUsersPage(email, idRole, status, pageable);
