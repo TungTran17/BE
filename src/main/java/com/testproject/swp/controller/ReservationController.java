@@ -3,6 +3,8 @@ package com.testproject.swp.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.testproject.swp.model.Cart.CartDto;
+import com.testproject.swp.model.Cart.CartMapper;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,4 +60,10 @@ public class ReservationController {
     public ReservationsDTO deleteReservation(@PathVariable int id) throws CustomNotFoundEx {
         return reservationService.deleteReservation(id);
     }
+
+    @PutMapping("/reservation/checkCart")
+    public int getReservationById(@RequestBody CartDto cartDto) throws CustomNotFoundEx {
+        return reservationService.checkReservationDetail(CartMapper.toGetReservationDetail(cartDto));
+    }
+
 }

@@ -33,6 +33,7 @@ public class ReservationDetail {
     private int nurseID;
     private Date beginTime;
     private int slot;
+    private double price;
 
     @ManyToOne
     @JoinColumn(name = "userID")

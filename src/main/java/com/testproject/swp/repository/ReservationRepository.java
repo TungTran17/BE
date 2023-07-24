@@ -11,5 +11,7 @@ import com.testproject.swp.entity.Reservation;
 public interface ReservationRepository extends JpaRepository<Reservation, Integer>{
 
     Optional<Reservation> findById(int id);
+
+
     
 }

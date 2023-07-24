@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.testproject.swp.entity.ReservationDetail;
+import com.testproject.swp.repository.ReservationDetailRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +32,7 @@ import lombok.RequiredArgsConstructor;
 public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
+    private final ReservationDetailRepository reservationDetailRepository;
 
     @Override
     public List<ReservationsDTO> getAllReservations() {
@@ -92,6 +95,12 @@ public class ReservationServiceImpl implements ReservationService {
         } else {
             throw new CustomNotFoundEx(CustomError.builder().code("404").message("User not found").build());
         }
+    }
+
+    @Override
+    public int checkReservationDetail(ReservationDetail reservationDetail) {
+
+        return reservationDetailRepository.checkReservationDetail(reservationDetail.getBeginTime(),reservationDetail.getDocterID(), reservationDetail.getNurseID(), reservationDetail.getSlot());
     }
 
 }
