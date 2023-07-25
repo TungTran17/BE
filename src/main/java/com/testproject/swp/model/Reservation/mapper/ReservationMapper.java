@@ -14,6 +14,7 @@ public class ReservationMapper {
                 .note(reservation.getNote())
                 .reservationStatus(reservation.getReservationStatus())
                 .createdDate(reservation.getCreatedDate())
+                .userGuess(reservation.getUser().getEmail())
                 .build();
     }
 
@@ -23,6 +24,7 @@ public class ReservationMapper {
                 .note(reservation.getNote())
                 .reservationStatus(reservation.getReservationStatus())
                 .createdDate(reservation.getCreatedDate())
+
                 .build();
     }
 

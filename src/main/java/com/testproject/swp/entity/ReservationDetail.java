@@ -29,6 +29,7 @@ public class ReservationDetail {
     private int reservationDetailID;
     private int quantity;
     private int numOfPerson;
+
     private int docterID;
     private int nurseID;
     private Date beginTime;

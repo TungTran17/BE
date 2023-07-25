@@ -3,9 +3,11 @@ package com.testproject.swp.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.testproject.swp.entity.ReservationDetail;
 import com.testproject.swp.model.Cart.CartDto;
 import com.testproject.swp.model.Cart.CartMapper;
 import com.testproject.swp.model.Cart.CartsDto;
+import com.testproject.swp.model.ReservationDetails.dto.ReservationDetailDto;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +34,7 @@ import lombok.RequiredArgsConstructor;
 public class ReservationController {
 
     private final ReservationService reservationService;
+
 
     @GetMapping("/reservations")
     public List<ReservationsDTO> getAllReservations() {
@@ -64,12 +67,18 @@ public class ReservationController {
 
     @PutMapping("/reservation/checkCart")
     public int getReservationById(@RequestBody CartDto cartDto) throws CustomNotFoundEx {
-        return reservationService.checkReservationDetail(CartMapper.toGetReservationDetail(cartDto));
+
+        return reservationService.checkReservationDetail(cartDto);
     }
 
     @PutMapping("/reservation/addCart")
     public int getAddCart(@RequestBody CartsDto cartDto) throws CustomNotFoundEx {
        return   reservationService.add(cartDto);
+    }
+
+    @GetMapping("/reservationDetail/{id}")
+    public List<ReservationDetailDto> getReservationDetail(@PathVariable int id) throws CustomNotFoundEx {
+        return   reservationService.getReservationDetailByReservationId(id);
     }
 
 }

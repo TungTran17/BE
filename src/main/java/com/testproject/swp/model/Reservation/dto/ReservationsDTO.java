@@ -17,5 +17,6 @@ public class ReservationsDTO {
     private String note;
     private int reservationStatus;
     private Date createdDate;
-    
+    private String userGuess;
+
 }

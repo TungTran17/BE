@@ -1,10 +1,11 @@
 package com.testproject.swp.model.Cart;
 
-import com.testproject.swp.entity.Reservation;
 import com.testproject.swp.entity.ReservationDetail;
-import com.testproject.swp.model.Reservation.dto.ReservationsDTO;
+import com.testproject.swp.repository.UserRepository;
 
 public class CartMapper {
+
+
     public static ReservationDetail toGetReservationDetail(CartDto cartDto) {
         return ReservationDetail.builder()
                 .reservationDetailID(cartDto.getCartId())

@@ -6,6 +6,8 @@ import com.testproject.swp.entity.ReservationDetail;
 import com.testproject.swp.model.Cart.CartDto;
 import com.testproject.swp.model.Cart.CartMapper;
 import com.testproject.swp.model.Cart.CartsDto;
+import com.testproject.swp.model.ReservationDetails.dto.ReservationDetailDto;
+import com.testproject.swp.model.ReservationDetails.mapper.ReservationDetailMapper;
 import com.testproject.swp.repository.ReservationDetailRepository;
 import com.testproject.swp.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
@@ -99,9 +101,12 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public int checkReservationDetail(ReservationDetail reservationDetail) {
-
-        return reservationDetailRepository.checkReservationDetail(reservationDetail.getBeginTime(),reservationDetail.getDocterID(), reservationDetail.getNurseID(), reservationDetail.getSlot());
+    public int checkReservationDetail(CartDto cartDto) {
+        ReservationDetail reservationDetail = CartMapper.toGetReservationDetail(cartDto);
+//        reservationDetail.setDocter(userRepository.findById(cartDto.getDoctor()).get());
+//        reservationDetail.setNurse(userRepository.findById(cartDto.getNurse()).get());
+        return reservationDetailRepository.checkReservationDetail(reservationDetail.getBeginTime(),reservationDetail.getDocterID()
+                , reservationDetail.getNurseID(), reservationDetail.getSlot());
     }
 
     @Override
@@ -117,12 +122,25 @@ public class ReservationServiceImpl implements ReservationService {
         reservation = reservationRepository.save(reservation);
         for (CartDto cartDto: cartsDto.getCards() ) {
             ReservationDetail reservationDetail = CartMapper.toGetReservationDetail(cartDto);
+//            reservationDetail.setDocter(userRepository.findById(cartDto.getDoctor()).get());
+//            reservationDetail.setNurse(userRepository.findById(cartDto.getNurse()).get());
+
             reservationDetail.setReservationDetailID(0);
             reservationDetail.setReservation(reservation);
             reservationDetail.setUser(user.get());
             reservationDetailRepository.save(reservationDetail);
         }
         return 1;
+    }
+
+    @Override
+    public List<ReservationDetailDto> getReservationDetailByReservationId(int reservationId) throws CustomNotFoundEx {
+        List<ReservationDetail> list = reservationDetailRepository.getReservationDetailByReservationIs(reservationId);
+        List<ReservationDetailDto> reservationDetailDtos = new ArrayList<>();
+        for (ReservationDetail reservationDetail:list ) {
+            reservationDetailDtos.add(ReservationDetailMapper.toGetReservationDetail(reservationDetail, userRepository));
+        }
+        return reservationDetailDtos;
     }
 
 }
