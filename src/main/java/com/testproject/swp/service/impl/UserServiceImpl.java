@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
         User user = UserMapper.toUserCreateUser(createUserDTOCreate);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         List<Role> roles = new ArrayList<>();
-        Role role = repository.findById(1).get();
+        Role role = repository.findById(4).get();
         roles.add(role);
         user.setRoles(roles);
         try {
