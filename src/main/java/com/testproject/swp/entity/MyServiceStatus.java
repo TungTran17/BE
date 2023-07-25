@@ -21,6 +21,6 @@ public class MyServiceStatus {
     @Column(unique = true,name = "service_id")
     private int serviceid;
 
-    @Column(unique = true,name = "service_status")
+    @Column(name = "service_status")
     private int servicestatus;
 }
