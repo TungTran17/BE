@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     private final JWTTokenUtil jwtTokenUtil;
 
     @Override
-    public Map<String, UserDTOResponse> authenticate(Map<String, UserDTOLoginRequest> userLoginRequestMap)
+    public User  authenticate(Map<String, UserDTOLoginRequest> userLoginRequestMap)
             throws CustomBadReqEx, CustomNotFoundEx {
         UserDTOLoginRequest userDTOLoginRequest = userLoginRequestMap.get("user");
 
@@ -67,13 +67,14 @@ public class UserServiceImpl implements UserService {
                     user.getPassword())) {
                 isAuthen = true;
                 // System.out.println("Username and password correct");
+                return userOptional.get();
             }
         }
         if (!isAuthen) {
             throw new CustomBadReqEx(
                     CustomError.builder().code("400").message("Email or password incorrect").build());
         }
-        return buildDTOResponse(userOptional.get());
+        return new User();
     }
 
     // @Override
@@ -262,7 +263,9 @@ public class UserServiceImpl implements UserService {
           user = userOptional.get();
       }else {
           user = new User();
-          user.setPassword("123");
+            String pass = passwordEncoder.encode("Admin123@@");
+          user.setPassword(pass);
+
           List<Reservation> reservations = new ArrayList<>();
           user.setReservations(reservations);
           List<ReservationDetail> reservationDetails = new ArrayList<>();

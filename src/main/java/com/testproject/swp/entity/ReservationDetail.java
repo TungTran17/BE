@@ -36,6 +36,10 @@ public class ReservationDetail {
     private double price;
 
     @ManyToOne
+    @JoinColumn(name = "reservationId")
+    private Reservation reservation;
+
+    @ManyToOne
     @JoinColumn(name = "userID")
     private User user;
 }

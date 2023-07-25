@@ -3,6 +3,7 @@ package com.testproject.swp.service;
 import java.util.List;
 import java.util.Map;
 
+import com.testproject.swp.entity.User;
 import com.testproject.swp.exception.custom.CustomBadReqEx;
 import com.testproject.swp.exception.custom.CustomNotFoundEx;
 import com.testproject.swp.model.user.dto.GetUsersDTO;
@@ -14,7 +15,7 @@ import com.testproject.swp.payload.LoginMessage;
 
 public interface UserService {
 
-        public Map<String, UserDTOResponse> authenticate(Map<String,
+        public User authenticate(Map<String,
         UserDTOLoginRequest> userDTOLoginRequestMap)
         throws CustomBadReqEx, CustomNotFoundEx;
 

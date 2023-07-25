@@ -21,6 +21,6 @@ public class MyServiceImage {
     @Column(unique = true,name = "service_id")
     private String serviceid;
 
-    @Column(name = "image_link")
+    @Column(name = "image_link", columnDefinition = "TEXT")
     private String imagelink;
 }

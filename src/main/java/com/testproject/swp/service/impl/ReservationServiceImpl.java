@@ -1,13 +1,13 @@
 package com.testproject.swp.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import com.testproject.swp.entity.ReservationDetail;
+import com.testproject.swp.model.Cart.CartDto;
+import com.testproject.swp.model.Cart.CartMapper;
+import com.testproject.swp.model.Cart.CartsDto;
 import com.testproject.swp.repository.ReservationDetailRepository;
+import com.testproject.swp.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +33,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final ReservationDetailRepository reservationDetailRepository;
+    private  final UserRepository userRepository;
 
     @Override
     public List<ReservationsDTO> getAllReservations() {
@@ -101,6 +102,27 @@ public class ReservationServiceImpl implements ReservationService {
     public int checkReservationDetail(ReservationDetail reservationDetail) {
 
         return reservationDetailRepository.checkReservationDetail(reservationDetail.getBeginTime(),reservationDetail.getDocterID(), reservationDetail.getNurseID(), reservationDetail.getSlot());
+    }
+
+    @Override
+    public int  add(CartsDto cartsDto) {
+        Reservation reservation = new Reservation();
+        reservation.setNote(cartsDto.getNote());
+        reservation.setReservationStatus(0);
+        Date thoiGianHienTai = new Date();
+        reservation.setCreatedDate(thoiGianHienTai);
+        Optional<User> user = userRepository.findById(cartsDto.getUserId());
+        reservation.setUser(user.get());
+        reservation.setTotalPrice(cartsDto.getTotal());
+        reservation = reservationRepository.save(reservation);
+        for (CartDto cartDto: cartsDto.getCards() ) {
+            ReservationDetail reservationDetail = CartMapper.toGetReservationDetail(cartDto);
+            reservationDetail.setReservationDetailID(0);
+            reservationDetail.setReservation(reservation);
+            reservationDetail.setUser(user.get());
+            reservationDetailRepository.save(reservationDetail);
+        }
+        return 1;
     }
 
 }

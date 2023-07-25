@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.testproject.swp.model.Cart.CartDto;
 import com.testproject.swp.model.Cart.CartMapper;
+import com.testproject.swp.model.Cart.CartsDto;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,6 +65,11 @@ public class ReservationController {
     @PutMapping("/reservation/checkCart")
     public int getReservationById(@RequestBody CartDto cartDto) throws CustomNotFoundEx {
         return reservationService.checkReservationDetail(CartMapper.toGetReservationDetail(cartDto));
+    }
+
+    @PutMapping("/reservation/addCart")
+    public int getAddCart(@RequestBody CartsDto cartDto) throws CustomNotFoundEx {
+       return   reservationService.add(cartDto);
     }
 
 }

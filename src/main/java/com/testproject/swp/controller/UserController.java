@@ -3,6 +3,7 @@ package com.testproject.swp.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.testproject.swp.entity.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,7 +36,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public Map<String, UserDTOResponse> login(@RequestBody Map<String, UserDTOLoginRequest> userDTOLoginReqMap)
+    public User login(@RequestBody Map<String, UserDTOLoginRequest> userDTOLoginReqMap)
             throws CustomBadReqEx, CustomNotFoundEx {
         return userService.authenticate(userDTOLoginReqMap);
     }
