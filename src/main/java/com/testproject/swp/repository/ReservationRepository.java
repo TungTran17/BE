@@ -8,10 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.testproject.swp.entity.Reservation;
 
 @Repository
-public interface ReservationRepository extends JpaRepository<Reservation, Integer>{
+public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
 
     Optional<Reservation> findById(int id);
 
-
-    
 }

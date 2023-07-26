@@ -14,9 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +22,10 @@ import com.testproject.swp.exception.custom.CustomBadReqEx;
 import com.testproject.swp.exception.custom.CustomNotFoundEx;
 import com.testproject.swp.model.customer.CustomError;
 import com.testproject.swp.model.user.dto.GetUsersDTO;
-import com.testproject.swp.model.user.dto.LoginMesage;
 import com.testproject.swp.model.user.dto.UserDTOCreate;
 import com.testproject.swp.model.user.dto.UserDTOLoginRequest;
 import com.testproject.swp.model.user.dto.UserDTOResponse;
-import com.testproject.swp.model.user.dto.UserDTOUpdate;
 import com.testproject.swp.model.user.mapper.UserMapper;
-import com.testproject.swp.payload.LoginMessage;
 import com.testproject.swp.repository.UserRepository;
 import com.testproject.swp.service.UserService;
 import com.testproject.swp.util.JWTTokenUtil;
@@ -46,11 +40,11 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private  final RoleRepository repository;
+    private final RoleRepository repository;
     private final JWTTokenUtil jwtTokenUtil;
 
     @Override
-    public User  authenticate(Map<String, UserDTOLoginRequest> userLoginRequestMap)
+    public User authenticate(Map<String, UserDTOLoginRequest> userLoginRequestMap)
             throws CustomBadReqEx, CustomNotFoundEx {
         UserDTOLoginRequest userDTOLoginRequest = userLoginRequestMap.get("user");
 
@@ -77,17 +71,6 @@ public class UserServiceImpl implements UserService {
         return new User();
     }
 
-    // @Override
-    // public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreate>
-    // userDTOCreateReqMap)
-    // throws CustomNotFoundEx {
-    // UserDTOCreate createUserDTOCreate = userDTOCreateReqMap.get("user");
-    // User user = UserMapper.toUserCreateUser(createUserDTOCreate);
-    // user.setPassword(passwordEncoder.encode(user.getPassword()));
-    // user = userRepository.save(user);
-    // return buildDTOResponse(user);
-    // }
-
     @Transactional
     @Override
     public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreate> userDTOCreateReqMap) {
@@ -99,25 +82,12 @@ public class UserServiceImpl implements UserService {
         roles.add(role);
         user.setRoles(roles);
         try {
-            user =  userRepository.save(user);
-        }catch (Exception e){
+            user = userRepository.save(user);
+        } catch (Exception e) {
             System.out.println("Lỗi" + e.getMessage());
         }
 
         return buildDTOResponse(user);
-//        try {
-//            user = userRepository.save(user);
-//        }catch (Exception e){
-//
-//        }
-//
-//        Optional<User> userOptional = userRepository.findById(user.getUserID());
-//                List<Role> roles = new ArrayList<>();
-//        Role role = repository.findById(1).get();
-//        roles.add(role);
-////        userOptional.get().getRoles().a;
-//        user = userRepository.save( userOptional.get());
-//        return buildDTOResponse(user);
     }
 
     private Map<String, UserDTOResponse> buildDTOResponse(User user) {
@@ -127,77 +97,6 @@ public class UserServiceImpl implements UserService {
         wrapper.put("user", userDTOResponse);
         return wrapper;
     }
-
-    // @Override
-    // public Map<String, UserDTOResponse> getCurrentUser() throws CustomNotFoundEx
-    // {
-    // Object principal =
-    // SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    // if (principal instanceof UserDetails) {
-    // String email = ((UserDetails) principal).getUsername();
-    // User user = userRepository.findByEmail(email).get();
-    // return buildDTOResponse(user);
-    // }
-    // throw new CustomNotFoundEx(CustomError.builder().code("404").message("User
-    // not exits").build());
-
-    // }
-
-    // @Override
-    // public Map<String, GetUsersDTO> getProfile(String name) throws
-    // CustomNotFoundEx {
-    // Optional<User> userOptional = userRepository.findByName(name);
-    // if (userOptional.isPresent()) {
-    // return buildProfileResponse(userOptional.get());
-    // } else {
-    // throw new CustomNotFoundEx(CustomError.builder().code("403").message("User
-    // not found").build());
-    // }
-    // }
-
-    // @Override
-    // public Map<String, UserDTOResponse> updateCurrentUser(Map<String,
-    // UserDTOUpdate> userDTOUpdateMap)
-    // throws CustomNotFoundEx {
-    // System.out.println("dsd");
-    // User user = getUserLoggedIn();
-    // UserDTOUpdate userDTOUpdate = userDTOUpdateMap.get("user");
-    // if (user != null) {
-    // UserMapper.toUserUpdateUser(user, userDTOUpdate);
-    // user = userRepository.save(user);
-    // return buildDTOResponse(user);
-    // }
-    // throw new CustomNotFoundEx(CustomError.builder().code("404").message("User
-    // not found").build());
-    // }
-
-    // public User getUserLoggedIn() {
-    // Object principal =
-    // SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    // if (principal instanceof UserDetails) {
-    // String email = ((UserDetails) principal).getUsername();
-    // User user = userRepository.findByEmail(email).get();
-    // System.out.println(user);
-    // return user;
-    // }
-    // System.out.println("đwdwd");
-    // return null;
-    // }
-
-    // private Map<String, GetUsersDTO> buildProfileResponse(User user) {
-    // Map<String, GetUsersDTO> wrapper = new HashMap<>();
-    // GetUsersDTO getUsersDTO = GetUsersDTO.builder()
-    // .name(user.getName())
-    // .gender(user.getGender())
-    // .address(user.getAddress())
-    // .email(user.getEmail())
-    // .phone(user.getPhone())
-    // .roleID(user.getRoleID())
-    // .status(user.getStatus())
-    // .build();
-    // wrapper.put("profile", getUsersDTO);
-    // return wrapper;
-    // }
 
     @Override
     public List<GetUsersDTO> getUserList() throws CustomNotFoundEx {
@@ -225,9 +124,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<GetUsersDTO> getUserByIdRole(int id) throws CustomNotFoundEx {
         List<User> userOptional = userRepository.findByRole(id);
-        if (userOptional != null ) {
+        if (userOptional != null) {
             List<GetUsersDTO> list = new ArrayList<>();
-            for (User user: userOptional) {
+            for (User user : userOptional) {
                 list.add(UserMapper.toGetUser(user));
             }
             return list;
@@ -237,7 +136,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public  List<GetUsersDTO> getListUsersPage(String email, int idRole, int status, int indexPage, int sizePage) throws CustomNotFoundEx {
+    public List<GetUsersDTO> getListUsersPage(String email, int idRole, int status, int indexPage, int sizePage)
+            throws CustomNotFoundEx {
         Pageable pageable = PageRequest.of(indexPage - 1, sizePage, Sort.by("userID").ascending());
         Page<User> page = userRepository.getListUsersPage(email, idRole, status, pageable);
 
@@ -252,45 +152,43 @@ public class UserServiceImpl implements UserService {
     @Override
     public int countListUsers(String email, int idRole, int status) throws CustomNotFoundEx {
 
-        return userRepository.countListUsersPage(email,idRole,status);
+        return userRepository.countListUsersPage(email, idRole, status);
     }
 
     @Override
     public GetUsersDTO updateUser(GetUsersDTO getUsersDTO) throws CustomNotFoundEx {
         Optional<User> userOptional = userRepository.findById(getUsersDTO.getUserID());
         User user;
-      if(userOptional.isPresent()){
-          user = userOptional.get();
-      }else {
-          user = new User();
+        if (userOptional.isPresent()) {
+            user = userOptional.get();
+        } else {
+            user = new User();
             String pass = passwordEncoder.encode("Admin123@@");
-          user.setPassword(pass);
+            user.setPassword(pass);
 
-          List<Reservation> reservations = new ArrayList<>();
-          user.setReservations(reservations);
-          List<ReservationDetail> reservationDetails = new ArrayList<>();
-          user.setReservationDetails(reservationDetails);
-      }
-            user.setName(getUsersDTO.getName());
-            user.setEmail(getUsersDTO.getEmail());
-            user.setPhone(getUsersDTO.getPhone());
-            user.setAddress(getUsersDTO.getAddress());
-            user.setGender(getUsersDTO.getGender());
-             user.setStatus(getUsersDTO.getStatus());
+            List<Reservation> reservations = new ArrayList<>();
+            user.setReservations(reservations);
+            List<ReservationDetail> reservationDetails = new ArrayList<>();
+            user.setReservationDetails(reservationDetails);
+        }
+        user.setName(getUsersDTO.getName());
+        user.setEmail(getUsersDTO.getEmail());
+        user.setPhone(getUsersDTO.getPhone());
+        user.setAddress(getUsersDTO.getAddress());
+        user.setGender(getUsersDTO.getGender());
+        user.setStatus(getUsersDTO.getStatus());
 
-            List<Role> roles = new ArrayList<>();
-            Role role = repository.findById(getUsersDTO.getRoleID()).get();
-            roles.add(role);
+        List<Role> roles = new ArrayList<>();
+        Role role = repository.findById(getUsersDTO.getRoleID()).get();
+        roles.add(role);
 
-            user.setRoles(roles);
-            try {
-//                List<Reservation> reservations = new ArrayList<>();
-//                if(user.setReservations(reservations));
-                User  usersDTO =  userRepository.save(user);
-                return UserMapper.toGetUser(usersDTO);
-            }catch (Exception e){
-                throw new CustomNotFoundEx(CustomError.builder().code("400").message(e.getMessage()).build());
-            }
+        user.setRoles(roles);
+        try {
+            User usersDTO = userRepository.save(user);
+            return UserMapper.toGetUser(usersDTO);
+        } catch (Exception e) {
+            throw new CustomNotFoundEx(CustomError.builder().code("400").message(e.getMessage()).build());
+        }
 
     }
 
@@ -309,45 +207,11 @@ public class UserServiceImpl implements UserService {
     public void activeUser(int id) throws CustomNotFoundEx {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
-            userOptional.get().setStatus(userOptional.get().getStatus()==1?0:1);
+            userOptional.get().setStatus(userOptional.get().getStatus() == 1 ? 0 : 1);
             userRepository.save(userOptional.get());
         } else {
             throw new CustomNotFoundEx(CustomError.builder().code("404").message("User not found").build());
         }
     }
-
-    // @Override
-    // public UserDTOResponse registerUser(UserDTOCreate userDTOCreateReqMap) {
-    // User user = UserMapper.toUserCreateUser(userDTOCreateReqMap);
-    // user.setPassword(passwordEncoder.encode(user.getPassword()));
-    // user.setToken(jwtTokenUtil.generateToken(user, 24 * 60 * 60));
-    // user = userRepository.save(user);
-    // return UserMapper.toUserDTOResponse(user);
-    // }
-
-    // @Override
-    // public LoginMessage login(UserDTOLoginRequest userDTOLoginRequest) {
-    // String msg = "";
-    // User user1 = userRepository.findByEmail(userDTOLoginRequest.getEmail());
-    // if (user1 != null) {
-    // String password = userDTOLoginRequest.getPassword();
-    // String encodedPassword = user1.getPassword();
-    // Boolean isPwdRight = passwordEncoder.matches(password, encodedPassword);
-    // if (isPwdRight) {
-    // Optional<User> user =
-    // userRepository.findOneByEmailAndPassword(userDTOLoginRequest.getEmail(),
-    // encodedPassword);
-    // if (user.isPresent()) {
-    // return new LoginMessage("Login Success", true);
-    // } else {
-    // return new LoginMessage("Login Failed", false);
-    // }
-    // } else {
-    // return new LoginMessage("password Not Match", false);
-    // }
-    // } else {
-    // return new LoginMessage("Email not exits", false);
-    // }
-    // }
 
 }

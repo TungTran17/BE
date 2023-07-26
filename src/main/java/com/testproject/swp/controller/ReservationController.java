@@ -3,9 +3,7 @@ package com.testproject.swp.controller;
 import java.util.List;
 import java.util.Map;
 
-import com.testproject.swp.entity.ReservationDetail;
 import com.testproject.swp.model.Cart.CartDto;
-import com.testproject.swp.model.Cart.CartMapper;
 import com.testproject.swp.model.Cart.CartsDto;
 import com.testproject.swp.model.ReservationDetails.dto.ReservationDetailDto;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,7 +32,6 @@ import lombok.RequiredArgsConstructor;
 public class ReservationController {
 
     private final ReservationService reservationService;
-
 
     @GetMapping("/reservations")
     public List<ReservationsDTO> getAllReservations() {
@@ -73,12 +70,12 @@ public class ReservationController {
 
     @PutMapping("/reservation/addCart")
     public int getAddCart(@RequestBody CartsDto cartDto) throws CustomNotFoundEx {
-       return   reservationService.add(cartDto);
+        return reservationService.add(cartDto);
     }
 
     @GetMapping("/reservationDetail/{id}")
     public List<ReservationDetailDto> getReservationDetail(@PathVariable int id) throws CustomNotFoundEx {
-        return   reservationService.getReservationDetailByReservationId(id);
+        return reservationService.getReservationDetailByReservationId(id);
     }
 
 }

@@ -1,14 +1,13 @@
 package com.testproject.swp.model.ReservationDetails.mapper;
 
 import com.testproject.swp.entity.ReservationDetail;
-import com.testproject.swp.model.Reservation.dto.ReservationsDTO;
 import com.testproject.swp.model.ReservationDetails.dto.ReservationDetailDto;
 import com.testproject.swp.repository.UserRepository;
 
 public class ReservationDetailMapper {
 
-
-    public static ReservationDetailDto toGetReservationDetail(ReservationDetail reservationDetail, UserRepository userRepository) {
+    public static ReservationDetailDto toGetReservationDetail(ReservationDetail reservationDetail,
+            UserRepository userRepository) {
         return ReservationDetailDto.builder()
                 .id(reservationDetail.getReservationDetailID())
                 .quantity(reservationDetail.getQuantity())

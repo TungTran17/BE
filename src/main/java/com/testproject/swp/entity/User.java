@@ -1,6 +1,5 @@
 package com.testproject.swp.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -41,20 +40,10 @@ public class User {
     private int roleID;
     private int status;
 
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @EqualsAndHashCode.Exclude
-//    @ToString.Exclude
-//    @JoinTable(name = "User_roles", joinColumns = @JoinColumn(name = "userID"),
-//            inverseJoinColumns = @JoinColumn(name = "roleID"))
-//
-
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @JoinTable(name = "User_roles",
-            joinColumns = @JoinColumn(name = "userID"),
-            inverseJoinColumns = @JoinColumn(name = "roleID")
-    )
+    @JoinTable(name = "User_roles", joinColumns = @JoinColumn(name = "userID"), inverseJoinColumns = @JoinColumn(name = "roleID"))
     private List<Role> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

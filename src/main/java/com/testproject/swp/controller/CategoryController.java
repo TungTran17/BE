@@ -2,7 +2,6 @@ package com.testproject.swp.controller;
 
 import com.testproject.swp.exception.custom.CustomNotFoundEx;
 import com.testproject.swp.model.category.dto.CategoryDTO;
-import com.testproject.swp.model.service.dto.GetMyService;
 import com.testproject.swp.service.CategoryService;
 import org.springframework.web.bind.annotation.*;
 

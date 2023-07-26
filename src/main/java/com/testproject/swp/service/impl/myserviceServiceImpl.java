@@ -4,19 +4,15 @@ import com.testproject.swp.entity.*;
 import com.testproject.swp.exception.custom.CustomNotFoundEx;
 import com.testproject.swp.model.service.dto.GetMyService;
 import com.testproject.swp.model.service.mapper.MyServiceMapper;
-import com.testproject.swp.repository.*; 
+import com.testproject.swp.repository.*;
 import com.testproject.swp.service.MyserviceService;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -230,7 +226,6 @@ public class myserviceServiceImpl implements MyserviceService {
         return myServiceList;
     }
 
-   
     @Override
     public boolean createMyService(MyService myServiceMap) {
         MyService myService = MyService.builder()
@@ -244,7 +239,7 @@ public class myserviceServiceImpl implements MyserviceService {
                 .vote(myServiceMap.getVote())
                 .build();
 
-                System.out.println(myService.getBi()+"a");
+        System.out.println(myService.getBi() + "a");
         MyService savedService = myServiceRepository.save(myService);
         MyServiceImage myServiceImage = MyServiceImage.builder()
                 .imageid(savedService.getId())
@@ -252,7 +247,7 @@ public class myserviceServiceImpl implements MyserviceService {
                 .imagelink(myServiceMap.getImagelink())
                 .build();
         MyServiceImage savedImage = myServiceImageRepository.save(myServiceImage);
-//        savedService.setMyServiceImage(savedImage);
+        // savedService.setMyServiceImage(savedImage);
         MyServiceStatus myServiceStatus = MyServiceStatus.builder()
                 .statusid(savedService.getId())
                 .serviceid(savedService.getId())
@@ -296,7 +291,7 @@ public class myserviceServiceImpl implements MyserviceService {
         System.out.println(myServiceImage);
         MyServiceImage savedImage = myServiceImageRepository.save(myServiceImage);
         savedImage.setImageid(savedService.getId());
-//        savedService.setMyServiceImage(savedImage);
+        // savedService.setMyServiceImage(savedImage);
         MyServiceStatus myServiceStatus = MyServiceStatus.builder()
                 .statusid(savedService.getId())
                 .serviceid(savedService.getId())
@@ -321,16 +316,16 @@ public class myserviceServiceImpl implements MyserviceService {
     @Transactional
     public boolean deletService(int id) {
 
-        List<MyServiceStatus> myServiceStatus =  myServiceStatusRepository.findByServiceid(id);
+        List<MyServiceStatus> myServiceStatus = myServiceStatusRepository.findByServiceid(id);
         for (MyServiceStatus myServiceStatus2 : myServiceStatus) {
             myServiceStatus2.setServicestatus(0);
             myServiceStatusRepository.save(myServiceStatus2);
         }
         // MyService service = myServiceRepository.findById(id);
         // if (service != null) {
-        //     service.setStatus(0);
-        //     myServiceRepository.save(service);
-        //     return true;
+        // service.setStatus(0);
+        // myServiceRepository.save(service);
+        // return true;
         // }
 
         // myServiceImageRepository.deleteByServiceid(String.valueOf(id) );

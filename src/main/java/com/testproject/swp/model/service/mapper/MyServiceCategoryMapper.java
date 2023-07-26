@@ -1,6 +1,5 @@
 package com.testproject.swp.model.service.mapper;
 
-import com.testproject.swp.entity.MyService;
 import com.testproject.swp.entity.MyServiceCategory;
 import com.testproject.swp.model.service.dto.GetMyServiceCategory; 
 

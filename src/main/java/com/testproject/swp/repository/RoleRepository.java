@@ -7,5 +7,5 @@ import com.testproject.swp.entity.Role;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Integer> {
-    
+
 }

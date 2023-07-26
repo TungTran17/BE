@@ -4,16 +4,12 @@ import com.testproject.swp.entity.MyService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @EnableJpaRepositories
 @Repository
@@ -22,10 +18,11 @@ public interface MyServiceRepository extends JpaRepository<MyService, Integer> {
     Page<MyService> findAll(Pageable pageable);
 
     MyService save(MyService myService);
+
     void deleteById(int id);
+
     @Query("SELECT m FROM MyService m WHERE (:status = -1 OR m.myServiceStatus.servicestatus = :status)")
     Page<MyService> findAllByStatus(int status, Pageable pageable);
-
 
     @Query("SELECT m FROM MyService m WHERE (:status = -1 OR m.myServiceStatus.servicestatus = :status) " +
             "AND (:title IS NULL OR :title = 'none' OR LOWER(m.title) LIKE LOWER(:title) || '%')" +
@@ -38,6 +35,7 @@ public interface MyServiceRepository extends JpaRepository<MyService, Integer> {
 
     @Query("SELECT m FROM MyService m WHERE m.id =:id")
     MyService findById(int id);
+
     List<MyService> findByTitleContainingIgnoreCase(String title);
 
     List<MyService> findByBiContainingIgnoreCase(String bi);

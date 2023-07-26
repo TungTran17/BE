@@ -10,7 +10,6 @@ import com.testproject.swp.model.ReservationDetails.dto.ReservationDetailDto;
 import com.testproject.swp.model.ReservationDetails.mapper.ReservationDetailMapper;
 import com.testproject.swp.repository.ReservationDetailRepository;
 import com.testproject.swp.repository.UserRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -23,7 +22,6 @@ import com.testproject.swp.model.Reservation.dto.ReservationUpdateDTO;
 import com.testproject.swp.model.Reservation.dto.ReservationsDTO;
 import com.testproject.swp.model.Reservation.mapper.ReservationMapper;
 import com.testproject.swp.model.customer.CustomError;
-import com.testproject.swp.model.user.mapper.UserMapper;
 import com.testproject.swp.repository.ReservationRepository;
 import com.testproject.swp.service.ReservationService;
 
@@ -35,7 +33,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final ReservationDetailRepository reservationDetailRepository;
-    private  final UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public List<ReservationsDTO> getAllReservations() {
@@ -103,14 +101,12 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public int checkReservationDetail(CartDto cartDto) {
         ReservationDetail reservationDetail = CartMapper.toGetReservationDetail(cartDto);
-//        reservationDetail.setDocter(userRepository.findById(cartDto.getDoctor()).get());
-//        reservationDetail.setNurse(userRepository.findById(cartDto.getNurse()).get());
-        return reservationDetailRepository.checkReservationDetail(reservationDetail.getBeginTime(),reservationDetail.getDocterID()
-                , reservationDetail.getNurseID(), reservationDetail.getSlot());
+        return reservationDetailRepository.checkReservationDetail(reservationDetail.getBeginTime(),
+                reservationDetail.getDocterID(), reservationDetail.getNurseID(), reservationDetail.getSlot());
     }
 
     @Override
-    public int  add(CartsDto cartsDto) {
+    public int add(CartsDto cartsDto) {
         Reservation reservation = new Reservation();
         reservation.setNote(cartsDto.getNote());
         reservation.setReservationStatus(0);
@@ -120,10 +116,8 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setUser(user.get());
         reservation.setTotalPrice(cartsDto.getTotal());
         reservation = reservationRepository.save(reservation);
-        for (CartDto cartDto: cartsDto.getCards() ) {
+        for (CartDto cartDto : cartsDto.getCards()) {
             ReservationDetail reservationDetail = CartMapper.toGetReservationDetail(cartDto);
-//            reservationDetail.setDocter(userRepository.findById(cartDto.getDoctor()).get());
-//            reservationDetail.setNurse(userRepository.findById(cartDto.getNurse()).get());
 
             reservationDetail.setReservationDetailID(0);
             reservationDetail.setReservation(reservation);
@@ -137,8 +131,9 @@ public class ReservationServiceImpl implements ReservationService {
     public List<ReservationDetailDto> getReservationDetailByReservationId(int reservationId) throws CustomNotFoundEx {
         List<ReservationDetail> list = reservationDetailRepository.getReservationDetailByReservationIs(reservationId);
         List<ReservationDetailDto> reservationDetailDtos = new ArrayList<>();
-        for (ReservationDetail reservationDetail:list ) {
-            reservationDetailDtos.add(ReservationDetailMapper.toGetReservationDetail(reservationDetail, userRepository));
+        for (ReservationDetail reservationDetail : list) {
+            reservationDetailDtos
+                    .add(ReservationDetailMapper.toGetReservationDetail(reservationDetail, userRepository));
         }
         return reservationDetailDtos;
     }

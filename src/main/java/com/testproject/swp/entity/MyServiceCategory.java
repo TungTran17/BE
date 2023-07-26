@@ -15,7 +15,7 @@ public class MyServiceCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true,name = "category_id")
+    @Column(unique = true, name = "category_id")
     private int categoryid;
 
     @Column(name = "category_name")
@@ -23,8 +23,5 @@ public class MyServiceCategory {
 
     @Column(name = "icon")
     private String icon;
-
-
-
 
 }
